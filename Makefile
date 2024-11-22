@@ -3,7 +3,7 @@ CCFLAGS= -Wall -Werror -std=c++11 -g
 LIBFLAGS= -lsfml-graphics -lsfml-window -lsfml-system
 SRC= $(wildcard *.cc)
 OBJ= $(SRC:.cc=.o)
-EXEC= balls
+EXEC= Catzilla
 
 all: $(EXEC)
 
