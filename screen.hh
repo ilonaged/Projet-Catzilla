@@ -8,7 +8,7 @@ private:
 
 public:
     Screen(int width, int height)
-        : window(sf::VideoMode(width, height), "Catzilla") {
+        : window(sf::VideoMode(width, height), "Catzilla", sf::Style::Default) {
         window.setFramerateLimit(60); 
     }
 
