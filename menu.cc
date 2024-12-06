@@ -34,8 +34,8 @@ void Menu::set_values(){
 
   options = {"JEU 1", "JEU 2", "JEU 3"};
   texts.resize(3);
-  coords = {{590,40},{610,191},{590,282}};
-  sizes = {24,24,24};
+  coords = {{410,225},{410,365},{410,510}};
+  sizes = {30,30,30};
 
   for (std::size_t i{}; i < texts.size(); ++i){
    texts[i].setFont(*font); 
@@ -44,12 +44,12 @@ void Menu::set_values(){
    texts[i].setOutlineColor(sf::Color::Black);
    texts[i].setPosition(coords[i]);
   }
-  texts[1].setOutlineThickness(4);
-  pos = 1;
+  texts[0].setOutlineThickness(4);
+  pos = 0;
 
-  winclose->setSize(sf::Vector2f(23,26));
-  winclose->setPosition(1178,39);
-  winclose->setFillColor(sf::Color::Transparent);
+  // winclose->setSize(sf::Vector2f(23,26));
+  // winclose->setPosition(1178,39);
+  // winclose->setFillColor(sf::Color::Transparent);
 
 }
 
@@ -64,7 +64,7 @@ void Menu::loop_events(){
     mouse_coord = window->mapPixelToCoords(pos_mouse);
 
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Down) && !pressed){
-      if( pos < 4){
+      if( pos < 2){
         ++pos;
         pressed = true;
         texts[pos].setOutlineThickness(4);
@@ -75,7 +75,7 @@ void Menu::loop_events(){
     }
 
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && !pressed){
-      if( pos > 1){
+      if( pos > 0){
         --pos;
         pressed = true;
         texts[pos].setOutlineThickness(4);
@@ -85,20 +85,20 @@ void Menu::loop_events(){
       }
     }
 
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) && !theselect){
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) && !theselect) {
       theselect = true;
-      if( pos == 4){
-        window->close();
-      }
+      // if( pos == 4){
+      //   window->close();
+      // }
       std::cout << options[pos] << '\n';
     }
 
-    if(sf::Mouse::isButtonPressed(sf::Mouse::Left)){
-      if(winclose->getGlobalBounds().contains(mouse_coord)){
-        //std::cout << "Close the window!" << '\n';
-        window->close();
-      }
-    }
+    // if(sf::Mouse::isButtonPressed(sf::Mouse::Left)){
+    //   if(winclose->getGlobalBounds().contains(mouse_coord)){
+    //     //std::cout << "Close the window!" << '\n';
+    //     window->close();
+    //   }
+    // }
   }
 }
 
