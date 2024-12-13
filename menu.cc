@@ -1,8 +1,7 @@
 #include "menu.hh"
 
-Menu::Menu(){
-  window = new sf::RenderWindow();
-  winclose = new sf::RectangleShape();
+Menu::Menu(Screen * main_window,int* gameState):gameState(gameState),main_window(main_window){
+  // window = new sf::RenderWindow();
   font = new sf::Font();
   image = new sf::Texture();
   bg = new sf::Sprite();
@@ -11,16 +10,14 @@ Menu::Menu(){
 }
 
 Menu::~Menu(){
-  delete window;
-  delete winclose;
   delete font;
   delete image;
   delete bg;
 }
 
 void Menu::set_values(){
-  window->create(sf::VideoMode(1280,720), "Menu SFML", sf::Style::Default);
-  window->setPosition(sf::Vector2i(0,0));
+  // window->create(sf::VideoMode(1280,720), "Menu SFML", sf::Style::Default);
+  main_window->setPosition(sf::Vector2i(0,0));
 
   pos = 0;
   pressed = theselect = false;
@@ -29,7 +26,7 @@ void Menu::set_values(){
 
   bg->setTexture(*image);
 
-  pos_mouse = {0,0};
+  // pos_mouse = {0,0};
   mouse_coord = {0, 0};
 
   options = {"JEU 1", "JEU 2", "JEU 3"};
@@ -47,21 +44,18 @@ void Menu::set_values(){
   texts[0].setOutlineThickness(4);
   pos = 0;
 
-  // winclose->setSize(sf::Vector2f(23,26));
-  // winclose->setPosition(1178,39);
-  // winclose->setFillColor(sf::Color::Transparent);
-
 }
 
 void Menu::loop_events(){
   sf::Event event;
-  while(window->pollEvent(event)){
-    if( event.type == sf::Event::Closed){
-      window->close();
-    }
+  while(main_window->pollEvent(event)){
+    // if( event.type == sf::Event::Closed){
+    //   window->close();
+    // }
 
-    pos_mouse = sf::Mouse::getPosition(*window);
-    mouse_coord = window->mapPixelToCoords(pos_mouse);
+    // pos_mouse = main_window->getPosition();
+    // mouse_coord = window->mapPixelToCoords(pos_mouse);
+    mouse_coord = main_window->getMousePosition();
 
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Down) && !pressed){
       if( pos < 2){
@@ -91,6 +85,10 @@ void Menu::loop_events(){
       //   window->close();
       // }
       std::cout << options[pos] << '\n';
+      *gameState=pos+1;
+      // std::cout <<*gameState<<std::endl;
+      
+
     }
 
     // if(sf::Mouse::isButtonPressed(sf::Mouse::Left)){
@@ -103,16 +101,16 @@ void Menu::loop_events(){
 }
 
 void Menu::draw_all(){
-  window->clear();
-  window->draw(*bg);
+  // main_window->clear();
+  main_window->draw(*bg);
   for(auto t : texts){
-   window->draw(t); 
+   main_window->draw(t); 
   }
-  window->display();
+  main_window->render();
 }
 
 void Menu::run_menu(){
-  while(window->isOpen()){
+  while(main_window->isOpen()){
     loop_events();
     draw_all();
   }

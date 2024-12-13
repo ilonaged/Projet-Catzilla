@@ -7,6 +7,8 @@ private:
     sf::RenderWindow window;
 
 public:
+    // sf::RenderWindow window;
+
     Screen(int width, int height)
         : window(sf::VideoMode(width, height), "Catzilla", sf::Style::Default) {
         window.setFramerateLimit(60); 
@@ -21,6 +23,7 @@ public:
         window.clear();
     }
 
+
     sf::Vector2u getSize() const {
         return window.getSize();
     }
@@ -29,12 +32,25 @@ public:
         return window.isOpen();
     }
 
-    void pollEvents() {
-        sf::Event event;
-        while (window.pollEvent(event)) {
+    bool pollEvent(sf::Event event) {
+        // while (window.pollEvent(event)) {
             if (event.type == sf::Event::Closed) {
                 window.close();
             }
-        }
+        // }
+        return window.pollEvent(event);
     }
+
+    void setPosition(const sf::Vector2i& vector){
+        window.setPosition(vector);
+    }
+
+
+     sf::Vector2f getMousePosition(){
+        sf::Vector2i pos_mouse=sf::Mouse::getPosition(window);
+        return window.mapPixelToCoords(pos_mouse);
+    }
+
+    
+
 };

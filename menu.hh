@@ -2,18 +2,20 @@
 
 #include <SFML/Graphics.hpp>
 #include <iostream>
+#include "screen.hh"
 
 class Menu {
   int pos;
   bool pressed, theselect;
+  int* gameState;
 
-  sf::RenderWindow * window;
-  sf::RectangleShape * winclose;
+  // sf::RenderWindow * window;
+  Screen * main_window;
   sf::Font * font;
   sf::Texture * image;
   sf::Sprite * bg;
 
-  sf::Vector2i pos_mouse;
+  // sf::Vector2i pos_mouse;
   sf::Vector2f mouse_coord;
 
   std::vector<const char *> options;
@@ -27,7 +29,7 @@ class Menu {
     void draw_all();
 
   public:
-    Menu();
+    Menu(Screen * main_window, int* gameState);
     ~Menu();
     void run_menu();
 };
