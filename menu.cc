@@ -21,8 +21,8 @@ void Menu::set_values(){
 
   pos = 0;
   pressed = theselect = false;
-  font->loadFromFile("./LVDCGO__.TTF");
-  image->loadFromFile("./menu-catzilla.png");
+  font->loadFromFile("./assets/LVDCGO__.TTF");
+  image->loadFromFile("./assets/menu-catzilla.png");
 
   bg->setTexture(*image);
 
@@ -48,10 +48,7 @@ void Menu::set_values(){
 
 void Menu::loop_events(){
   sf::Event event;
-  while(main_window->pollEvent(event)){
-    // if( event.type == sf::Event::Closed){
-    //   window->close();
-    // }
+  while(main_window->pollEvent(event)) {
 
     // pos_mouse = main_window->getPosition();
     // mouse_coord = window->mapPixelToCoords(pos_mouse);
@@ -81,12 +78,11 @@ void Menu::loop_events(){
 
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) && !theselect) {
       theselect = true;
-      // if( pos == 4){
-      //   window->close();
-      // }
+      
       std::cout << options[pos] << '\n';
       *gameState=pos+1;
-      // std::cout <<*gameState<<std::endl;
+      // pour chaque gamestate, on envoie vers une fenetre différente (fenetre vide avec ecrit jeu1, jeu2, jeu3 en fonction du gamestate)
+
       
 
     }
@@ -110,7 +106,7 @@ void Menu::draw_all(){
 }
 
 void Menu::run_menu(){
-  while(main_window->isOpen()){
+  while(*gameState == 0){
     loop_events();
     draw_all();
   }

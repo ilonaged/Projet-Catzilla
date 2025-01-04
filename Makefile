@@ -13,10 +13,10 @@ $(EXEC): $(OBJ)
 %.o: %.cc
 	$(CC) $(CCFLAGS) -o $@ -c $<
 
-.depends:
-	g++ -MM $(SRC) > .depends
+.depends: $(SRC)
+	@$(CC) -MM $(CCFLAGS) $(SRC) > .depends
 
 -include .depends
 
 clean:
-	rm -f $(OBJ) $(EXEC) *.*~
+	rm -f $(OBJ) $(EXEC) .depends *.*~
