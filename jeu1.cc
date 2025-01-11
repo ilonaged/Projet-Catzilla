@@ -1,13 +1,14 @@
-
 #include "jeu1.hh"
+#include "souris.hh"
 
-Jeu1::Jeu1(sf::RenderWindow * main_window,int* gameState):gameState(gameState),main_window(main_window){
+Jeu1::Jeu1(sf::RenderWindow * main_window,int* gameState):gameState(gameState),main_window(main_window) {
   font = new sf::Font();
   image = new sf::Texture();
   bg = new sf::Sprite();
 
   set_values();
 }
+
 
 
 void Jeu1::set_values(){
@@ -17,8 +18,13 @@ void Jeu1::set_values(){
 //   pos = 0;
 //   pressed = theselect = false;
 //   font->loadFromFile("./assets/LVDCGO__.TTF");
-  image->loadFromFile("./assets/parquet.png");
-
+  image->loadFromFile("./assets/game1-floor.png");
+  sf::Vector2u windowSize = main_window->getSize();
+  sf::Vector2u textureSize = image->getSize();
+  bg->setScale(
+    float(windowSize.x) / textureSize.x,
+    float(windowSize.y) / textureSize.y
+  );
   bg->setTexture(*image);
 
   // pos_mouse = {0,0};
@@ -41,7 +47,7 @@ void Jeu1::set_values(){
 
 }
 
-void Jeu1::loop_events(){
+void Jeu1::loop_events() {
   sf::Event event;
   while(main_window->pollEvent(event)) {
       if (event.type == sf::Event::Closed) {
@@ -50,7 +56,8 @@ void Jeu1::loop_events(){
   }
 }
 
-void Jeu1::draw_all(){
+
+void Jeu1::draw_all() {
   main_window->clear();
   main_window->draw(*bg);
 //   for(auto t : texts){
@@ -59,10 +66,13 @@ void Jeu1::draw_all(){
   main_window->display();
 }
 
+
 void Jeu1::run_jeu1(){
-    while(main_window->isOpen() && *gameState == 1){
-        draw_all();
-        loop_events();
+  
+    while(main_window->isOpen() && *gameState == 1) {
+      draw_all();
+      loop_events();
+      
   }
 
 }
