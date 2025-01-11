@@ -2,7 +2,6 @@
 
 #include <SFML/Graphics.hpp>
 #include <iostream>
-#include "screen.hh"
 
 class Objet {
 protected:

@@ -3,8 +3,6 @@
 
 #include <SFML/Graphics.hpp>
 #include <iostream>
-#include "screen.hh"
-
 
 class Jeu1{
     private :

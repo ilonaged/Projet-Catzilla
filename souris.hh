@@ -1,7 +1,6 @@
 #pragma once
 
 #include "objet.hh"
-#include "screen.hh"
 
 class Souris: public Objet {
 public:

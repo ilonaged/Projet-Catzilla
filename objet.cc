@@ -8,6 +8,8 @@ Objet::Objet(sf::Vector2f position, sf::Texture * image):position(position),imag
 
 Objet::Objet(){
     position={0,0};
+    image = new sf::Texture();
+    sprite = new sf::Sprite();
 }
 
 Objet::~Objet(){

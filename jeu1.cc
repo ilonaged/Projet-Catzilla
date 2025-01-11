@@ -57,22 +57,42 @@ void Jeu1::loop_events() {
 }
 
 
-void Jeu1::draw_all() {
-  main_window->clear();
-  main_window->draw(*bg);
-//   for(auto t : texts){
-//    main_window->draw(t); 
-//   }
-  main_window->display();
-}
+// void Jeu1::draw_all() {
+//   main_window->clear();
+//   main_window->draw(*bg);
+//   main_window->display();
+// }
 
 
-void Jeu1::run_jeu1(){
+void Jeu1::run_jeu1() {
+
+  std::vector<Souris *> souris_liste;
+  int nb_souris = 10;
+  for (int i = 0; i < nb_souris; i++) {
+    souris_liste.push_back(new Souris(main_window));
+    souris_liste[i]->seDeplacer(150*i);
+  }
   
-    while(main_window->isOpen() && *gameState == 1) {
-      draw_all();
-      loop_events();
-      
+  while(main_window->isOpen() && *gameState == 1) {
+    // draw_all();
+    main_window->clear();
+    main_window->draw(*bg);
+    for (int i = 0; i < nb_souris; i++) {
+      souris_liste[i]->seDeplacer(2);
+      main_window->draw(*souris_liste[i]->sprite);
+    }
+    main_window->display();
+
+    // for (int i = 0; i < 100; i++) {
+    //   souris->seDeplacer(2);
+    //   main_window->clear();
+    //   main_window->draw(*bg);
+    //   main_window->draw(*souris->sprite);
+    //   main_window->display();
+    // }
+
+    loop_events();
+  
   }
 
 }
