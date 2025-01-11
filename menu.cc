@@ -1,6 +1,6 @@
 #include "menu.hh"
 
-Menu::Menu(Screen * main_window,int* gameState):gameState(gameState),main_window(main_window){
+Menu::Menu(sf::RenderWindow * main_window,int* gameState):gameState(gameState),main_window(main_window){
   // window = new sf::RenderWindow();
   font = new sf::Font();
   image = new sf::Texture();
@@ -49,10 +49,14 @@ void Menu::set_values(){
 void Menu::loop_events(){
   sf::Event event;
   while(main_window->pollEvent(event)) {
+      if (event.type == sf::Event::Closed) {
+        main_window->close();
+      }
 
-    // pos_mouse = main_window->getPosition();
-    // mouse_coord = window->mapPixelToCoords(pos_mouse);
-    mouse_coord = main_window->getMousePosition();
+    pos_mouse = main_window->getPosition();
+    mouse_coord = main_window->mapPixelToCoords(pos_mouse);
+    // mouse_coord = main_window->getMousePosition();
+
 
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Down) && !pressed){
       if( pos < 2){
@@ -74,6 +78,7 @@ void Menu::loop_events(){
         pressed = false;
         theselect = false;
       }
+
     }
 
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) && !theselect) {
@@ -97,16 +102,16 @@ void Menu::loop_events(){
 }
 
 void Menu::draw_all(){
-  // main_window->clear();
+  main_window->clear();
   main_window->draw(*bg);
   for(auto t : texts){
    main_window->draw(t); 
   }
-  main_window->render();
+  main_window->display();
 }
 
 void Menu::run_menu(){
-  while(*gameState == 0){
+  while(main_window->isOpen() && *gameState == 0){
     loop_events();
     draw_all();
   }

@@ -1,7 +1,7 @@
 
 #include "jeu1.hh"
 
-Jeu1::Jeu1(Screen * main_window,int* gameState):gameState(gameState),main_window(main_window){
+Jeu1::Jeu1(sf::RenderWindow * main_window,int* gameState):gameState(gameState),main_window(main_window){
   font = new sf::Font();
   image = new sf::Texture();
   bg = new sf::Sprite();
@@ -41,17 +41,28 @@ void Jeu1::set_values(){
 
 }
 
+void Jeu1::loop_events(){
+  sf::Event event;
+  while(main_window->pollEvent(event)) {
+      if (event.type == sf::Event::Closed) {
+        main_window->close();
+      }
+  }
+}
+
 void Jeu1::draw_all(){
+  main_window->clear();
   main_window->draw(*bg);
 //   for(auto t : texts){
 //    main_window->draw(t); 
 //   }
-  main_window->render();
+  main_window->display();
 }
 
 void Jeu1::run_jeu1(){
-    while(*gameState == 1){
+    while(main_window->isOpen() && *gameState == 1){
         draw_all();
+        loop_events();
   }
 
 }

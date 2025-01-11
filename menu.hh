@@ -9,13 +9,13 @@ class Menu {
   bool pressed, theselect;
   int* gameState;
 
-  // sf::RenderWindow * window;
-  Screen * main_window;
+  sf::RenderWindow * main_window;
+  // Screen * main_window;
   sf::Font * font;
   sf::Texture * image;
   sf::Sprite * bg;
 
-  // sf::Vector2i pos_mouse;
+  sf::Vector2i pos_mouse;
   sf::Vector2f mouse_coord;
 
   std::vector<const char *> options;
@@ -29,7 +29,7 @@ class Menu {
     void draw_all();
 
   public:
-    Menu(Screen * main_window, int* gameState);
+    Menu(sf::RenderWindow * main_window, int* gameState);
     ~Menu();
     void run_menu();
 };

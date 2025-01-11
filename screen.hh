@@ -4,10 +4,10 @@
 
 class Screen {
 private:
-    sf::RenderWindow window;
+    // sf::RenderWindow window;
 
 public:
-    // sf::RenderWindow window;
+    sf::RenderWindow window;
 
     Screen(int width, int height)
         : window(sf::VideoMode(width, height), "Catzilla", sf::Style::Default) {
@@ -32,15 +32,27 @@ public:
         return window.isOpen();
     }
 
+    void close(){
+        window.close();
+    }
+
     bool pollEvent(sf::Event& event) {
-        bool eventOccurred = false;
-        while (window.pollEvent(event)) {
-            eventOccurred = true;
-            if (event.type == sf::Event::Closed) {
-                window.close();
-            }
-        }
-        return eventOccurred;
+        // bool eventOccurred = false;
+        // while (window.pollEvent(event)) {
+        //     eventOccurred = true;
+        //     if (event.type == sf::Event::Closed) {
+        //         window.close();
+        //     }
+        // }
+        // return eventOccurred;
+        // if (window.pollEvent(event)) {
+        //     if (event.type == sf::Event::Closed) {
+        //         window.close();
+        //     }
+        //     return true;
+        // }
+        // return false;
+        return(window.pollEvent(event));
     }
 
     void setPosition(const sf::Vector2i& vector) {
