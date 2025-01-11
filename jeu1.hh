@@ -9,7 +9,7 @@
 class Jeu1{
     private :
         int* gameState;
-        Screen * main_window;
+        sf::RenderWindow * main_window;
         sf::Font * font;
         sf::Texture * image;
         sf::Sprite * bg;
@@ -20,7 +20,7 @@ class Jeu1{
         void draw_all();
 
     public:
-        Jeu1(Screen * main_window, int* gameState);
+        Jeu1(sf::RenderWindow * main_window, int* gameState);
         ~Jeu1();
         void run_jeu1();
 
