@@ -2,7 +2,7 @@
 
 #include "objet.hh"
 
-class Jouable: Objet {
+class Jouable: public Objet {
 public:
-    virtual void jouer();
+    virtual int jouer(sf::RenderWindow * main_window){return 0;};
 };

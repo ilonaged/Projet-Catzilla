@@ -3,6 +3,7 @@
 
 #include <SFML/Graphics.hpp>
 #include <iostream>
+#include "chat1.hh"
 
 class Jeu1{
     private :
@@ -14,7 +15,7 @@ class Jeu1{
 
     protected:
         void set_values();
-        void loop_events();
+        void loop_events(Chat1 *chat);
         void draw_all();
 
     public:

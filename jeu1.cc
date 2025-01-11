@@ -1,5 +1,6 @@
 #include "jeu1.hh"
 #include "souris.hh"
+#include "chat1.hh"
 
 Jeu1::Jeu1(sf::RenderWindow * main_window,int* gameState):gameState(gameState),main_window(main_window) {
   font = new sf::Font();
@@ -47,12 +48,19 @@ void Jeu1::set_values(){
 
 }
 
-void Jeu1::loop_events() {
+void Jeu1::loop_events(Chat1 *chat) {
   sf::Event event;
   while(main_window->pollEvent(event)) {
       if (event.type == sf::Event::Closed) {
         main_window->close();
       }
+
+      if(sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
+        main_window->clear();
+        main_window->draw(*bg);
+        chat->jouer(main_window);
+      }
+        
   }
 }
 
@@ -66,6 +74,8 @@ void Jeu1::loop_events() {
 
 void Jeu1::run_jeu1() {
 
+  Chat1 * chat = new Chat1(main_window);
+
   std::vector<Souris *> souris_liste;
   int nb_souris = 10;
   for (int i = 0; i < nb_souris; i++) {
@@ -78,9 +88,14 @@ void Jeu1::run_jeu1() {
     main_window->clear();
     main_window->draw(*bg);
     for (int i = 0; i < nb_souris; i++) {
-      souris_liste[i]->seDeplacer(2);
+      souris_liste[i]->seDeplacer(10);
       main_window->draw(*souris_liste[i]->sprite);
+
+      if (souris_liste[i]->position.x > main_window->getSize().x) {
+        souris_liste[i]->position.x = -130;
+      }
     }
+    main_window->draw(*chat->sprite);
     main_window->display();
 
     // for (int i = 0; i < 100; i++) {
@@ -91,7 +106,7 @@ void Jeu1::run_jeu1() {
     //   main_window->display();
     // }
 
-    loop_events();
+    loop_events(chat);
   
   }
 
