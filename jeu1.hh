@@ -4,6 +4,7 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include "chat1.hh"
+#include "souris.hh"
 
 class Jeu1{
     private :
@@ -12,11 +13,17 @@ class Jeu1{
         sf::Font * font;
         sf::Texture * image;
         sf::Sprite * bg;
+        int nb_souris_attrape=0;
+        float nb_souris_attrape_max=20;
+        std::vector<sf::Text> texts;
+        std::vector<const char *> options;
+        void print_score(int nb_souris_attrape,float nb_souris_attrape_max);
 
     protected:
         void set_values();
-        void loop_events(Chat1 *chat);
+        void loop_events(Chat1 *chat,std::vector<Souris *> souris_liste);
         void draw_all();
+
 
     public:
         Jeu1(sf::RenderWindow * main_window, int* gameState);
