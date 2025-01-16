@@ -13,16 +13,21 @@ class Jeu1{
         sf::Font * font;
         sf::Texture * image;
         sf::Sprite * bg;
+        bool pressed;
 
-        int nb_souris_attrape=0;
-        float nb_souris_attrape_max=20;
+        int nb_souris_attrape;
+        int nb_souris_passe;
+        float nb_souris_attrape_max;
+        int niveau_jeu;
+
+        std::string score;
 
         std::vector<sf::Text> texts;
         std::vector<sf::Vector2f> text_coords;
         std::vector<std::size_t> text_size;
         std::vector<const char *> options;
 
-        void print_score(int nb_souris_attrape,float nb_souris_attrape_max);
+        void print_text(int nb_souris_attrape,float nb_souris_attrape_max);
 
     protected:
         void set_values();
@@ -31,7 +36,7 @@ class Jeu1{
 
 
     public:
-        Jeu1(sf::RenderWindow * main_window, int* gameState);
+        Jeu1(sf::RenderWindow * main_window, int* gameState,int nb_souris_attrape_max,int niveau_jeu);
         ~Jeu1();
         void run_jeu1();
 

@@ -22,7 +22,7 @@ int main(int argc, char **argv) {
         std::cout << gamestate << '\n';
         std::cout << "Sortie du menu" << '\n';
         if(gamestate==1){
-            Jeu1 * jeu1 = new Jeu1(&main_window, &gamestate);
+            Jeu1 * jeu1 = new Jeu1(&main_window, &gamestate,10,1);
             jeu1->run_jeu1();
         }
         

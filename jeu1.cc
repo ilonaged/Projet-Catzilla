@@ -2,8 +2,9 @@
 #include "chat1.hh"
 #include <random>
 #include <chrono>
+#include <string>
 
-Jeu1::Jeu1(sf::RenderWindow * main_window,int* gameState):gameState(gameState),main_window(main_window) {
+Jeu1::Jeu1(sf::RenderWindow * main_window,int* gameState,int nb_souris_attrape_max,int niveau_jeu):gameState(gameState),main_window(main_window),nb_souris_attrape_max(nb_souris_attrape_max),niveau_jeu(niveau_jeu) {
   main_window->setKeyRepeatEnabled(false);
   font = new sf::Font();
   image = new sf::Texture();
@@ -18,6 +19,10 @@ void Jeu1::set_values(){
   // window->create(sf::VideoMode(1280,720), "Menu SFML", sf::Style::Default);
   main_window->setPosition(sf::Vector2i(0,0));
 
+  pressed=false;
+  nb_souris_attrape=0;
+
+
   image->loadFromFile("./assets/game1-floor.png");
   sf::Vector2u windowSize = main_window->getSize();
   sf::Vector2u textureSize = image->getSize();
@@ -28,10 +33,10 @@ void Jeu1::set_values(){
   bg->setTexture(*image);
 
   font->loadFromFile("./assets/LVDCGO__.TTF");
-  options={"Bonjour"};
-  texts.resize(1);
-  text_coords = {{static_cast<float>(main_window->getSize().x) / 2.0f , static_cast<float>(main_window->getSize().y) / 2.0f}};
-  text_size = {30};
+  options={"0/0","Press Space to catch the mouse"};
+  texts.resize(2);
+  text_coords = {{static_cast<float>(main_window->getSize().x) / 1.2f , static_cast<float>(main_window->getSize().y) / 20.0f},{25, 25}};
+  text_size = {30,20};
 
   for (std::size_t i{}; i < texts.size(); ++i){
     texts[i].setFont(*font); 
@@ -53,6 +58,7 @@ void Jeu1::loop_events(Chat1 *chat,std::vector<Souris *> souris_liste) {
 
       // if(sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
       if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Space) {
+        pressed=true;
         main_window->clear();
         main_window->draw(*bg);
         chat->jouer(main_window,souris_liste,&nb_souris_attrape);
@@ -68,8 +74,13 @@ void Jeu1::loop_events(Chat1 *chat,std::vector<Souris *> souris_liste) {
 //   main_window->display();
 // }
 
-void Jeu1::print_score(int nb_souris_attrape,float nb_souris_attrape_max) {
+void Jeu1::print_text(int nb_souris_attrape,float nb_souris_attrape_max) {
+  score=std::to_string(nb_souris_attrape)+'/'+std::to_string((int)(nb_souris_attrape_max));
+  texts[0].setString(score); 
   main_window->draw(texts[0]);
+  if (pressed==false){
+    main_window->draw(texts[1]);
+  }
 }
 
 
@@ -112,6 +123,9 @@ void Jeu1::run_jeu1() {
 
     if (elapsed_time > spawn_interval) {
     souris_liste.push_back(new Souris(main_window));
+    if (pressed){
+      nb_souris_passe++;
+    }
     last_spawn_time = current_time;
     spawn_interval = distribution(generator);
   }
@@ -137,7 +151,7 @@ void Jeu1::run_jeu1() {
     //   }
     // }
     main_window->draw(*chat->sprite);
-    print_score(nb_souris_attrape,nb_souris_attrape_max);
+    print_text(nb_souris_attrape,nb_souris_attrape_max);
     main_window->display();
 
     // for (int i = 0; i < 100; i++) {
@@ -150,12 +164,22 @@ void Jeu1::run_jeu1() {
 
     loop_events(chat,souris_liste);
     if ((nb_souris_attrape/nb_souris_attrape_max)>inc_vitesse/6){
-      vitesse_souris+=8;
+       switch (niveau_jeu)
+      {
+         case 1:
+            vitesse_souris+=2;
+            break;
+         case 2:
+            vitesse_souris+=5;
+            break;
+         case 3:
+            vitesse_souris+=8;
+      }
       inc_vitesse++;
       std::cout<<"vitesse_souris"<<vitesse_souris<<std::endl;
       std::cout<<"inc_vitesse"<<inc_vitesse<<std::endl;
     }
-    if (nb_souris_attrape>nb_souris_attrape_max){
+    if (nb_souris_passe>nb_souris_attrape_max){
       *gameState=4;
 
 
