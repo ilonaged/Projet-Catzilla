@@ -18,9 +18,6 @@ void Jeu1::set_values(){
   // window->create(sf::VideoMode(1280,720), "Menu SFML", sf::Style::Default);
   main_window->setPosition(sf::Vector2i(0,0));
 
-//   pos = 0;
-//   pressed = theselect = false;
-//   font->loadFromFile("./assets/LVDCGO__.TTF");
   image->loadFromFile("./assets/game1-floor.png");
   sf::Vector2u windowSize = main_window->getSize();
   sf::Vector2u textureSize = image->getSize();
@@ -30,25 +27,22 @@ void Jeu1::set_values(){
   );
   bg->setTexture(*image);
 
-  // pos_mouse = {0,0};
-//   mouse_coord = {0, 0};
+  font->loadFromFile("./assets/LVDCGO__.TTF");
+  options={"Bonjour"};
+  texts.resize(1);
+  text_coords = {{static_cast<float>(main_window->getSize().x) / 2.0f , static_cast<float>(main_window->getSize().y) / 2.0f}};
+  text_size = {30};
 
-//   options = {"JEU 1", "JEU 2", "JEU 3"};
-//   texts.resize(3);
-//   coords = {{410,225},{410,365},{410,510}};
-//   sizes = {30,30,30};
-
-//   for (std::size_t i{}; i < texts.size(); ++i){
-//    texts[i].setFont(*font); 
-//    texts[i].setString(options[i]); 
-//    texts[i].setCharacterSize(sizes[i]);
-//    texts[i].setOutlineColor(sf::Color::Black);
-//    texts[i].setPosition(coords[i]);
-//   }
-//   texts[0].setOutlineThickness(4);
-//   pos = 0;
-
+  for (std::size_t i{}; i < texts.size(); ++i){
+    texts[i].setFont(*font); 
+    texts[i].setString(options[i]); 
+    texts[i].setCharacterSize(text_size[i]);
+    texts[i].setOutlineColor(sf::Color::Black);
+    texts[i].setPosition(text_coords[i]);
+  }
+  texts[0].setOutlineThickness(4);
 }
+
 
 void Jeu1::loop_events(Chat1 *chat,std::vector<Souris *> souris_liste) {
   sf::Event event;
@@ -74,26 +68,16 @@ void Jeu1::loop_events(Chat1 *chat,std::vector<Souris *> souris_liste) {
 //   main_window->display();
 // }
 
-void Jeu1::print_score(int nb_souris_attrape,float nb_souris_attrape_max){
-  options={"Bonjour"};
-  // texts.setFont(*font);
-  texts.resize(1);
-  texts[0].setString(options[0]); 
-  texts[0].setCharacterSize(30);
-  texts[0].setOutlineColor(sf::Color::Black);
-  // texts[0].setPosition(main_window->getSize().x/1.1,main_window->getSize().y/10);
-  texts[0].setPosition(main_window->getSize().x/2,main_window->getSize().y/2);
-  texts[0].setOutlineThickness(4);
+void Jeu1::print_score(int nb_souris_attrape,float nb_souris_attrape_max) {
   main_window->draw(texts[0]);
-
 }
 
 
 void Jeu1::run_jeu1() {
 
   Chat1 * chat = new Chat1(main_window);
-
   std::vector<Souris *> souris_liste;
+  
   float inc_vitesse=1;
   // for (int i = 0; i < nb_souris; i++) {
   //   souris_liste.push_back(new Souris(main_window));
