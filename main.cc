@@ -17,13 +17,13 @@ int main(int argc, char **argv) {
 
         
         if (gamestate == 0) {
-            menu->run_menu();
+            menu->run();
         }
         std::cout << gamestate << '\n';
         std::cout << "Sortie du menu" << '\n';
         if(gamestate==1){
-            Jeu1 * jeu1 = new Jeu1(&main_window, &gamestate,40,3);
-            jeu1->run_jeu1();
+            Jeu1 * jeu1 = new Jeu1(&main_window, &gamestate,20,2);
+            jeu1->run();
         }
         
 

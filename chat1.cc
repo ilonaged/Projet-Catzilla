@@ -13,7 +13,7 @@ Chat1::Chat1(sf::RenderWindow * main_window) {
 
 }
 
-int Chat1::jouer(sf::RenderWindow * main_window,std::vector<Souris *> *pointeur_souris_liste) {
+int Chat1::jouer(sf::RenderWindow * main_window,std::vector<Souris *> *pointeur_souris_liste,sf::Sprite * bg) {
     int borne_gauche,borne_droite;
     int attrape=0;
 
@@ -30,6 +30,12 @@ int Chat1::jouer(sf::RenderWindow * main_window,std::vector<Souris *> *pointeur_
     sprite->setTexture(*image2);
 
     for (int i = 0 ; i < 7 ; i++) {
+        main_window->clear();
+        main_window->draw(*bg);
+        for (std::size_t i = 0; i < pointeur_souris_liste->size(); ++i) {
+        (*pointeur_souris_liste)[i]->seDeplacer();
+        main_window->draw(*((*pointeur_souris_liste)[i]->sprite));
+        }
         main_window->draw(*sprite);
         main_window->display();
     }

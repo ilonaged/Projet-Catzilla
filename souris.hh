@@ -4,6 +4,7 @@
 
 class Souris: public Objet {
 public:
-    Souris(sf::RenderWindow * main_window);
-    void seDeplacer(float vitesse);
+    int vitesse_souris;
+    Souris(sf::RenderWindow * main_window,int vitesse_souris);
+    void seDeplacer();
 };

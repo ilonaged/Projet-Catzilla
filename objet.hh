@@ -13,5 +13,5 @@ public:
     Objet(sf::Vector2f position, sf::Texture * image);
     Objet();
     ~Objet();
-    virtual void seDeplacer(float vitesse) {};
+    virtual void seDeplacer() {};
 };
