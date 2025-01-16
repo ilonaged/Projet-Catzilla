@@ -21,6 +21,7 @@ void Jeu1::set_values(){
 
   pressed=false;
   nb_souris_attrape=0;
+  nb_souris_passe=0;
 
 
   image->loadFromFile("./assets/game1-floor.png");
