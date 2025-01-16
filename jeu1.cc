@@ -21,12 +21,13 @@ void Jeu1::set_values(){
   // window->create(sf::VideoMode(1280,720), "Menu SFML", sf::Style::Default);
   main_window->setPosition(sf::Vector2i(0,0));
 
+  chat = new Chat1(main_window);
+
   pressed=false;
-  animation=0;
+  animation_duree=0;
 
   nb_souris_attrape=0;
   nb_souris_passe=0;
-
 
   image->loadFromFile("./assets/game1-floor.png");
   sf::Vector2u windowSize = main_window->getSize();
@@ -57,8 +58,9 @@ void Jeu1::set_values(){
 }
 
 
-void Jeu1::loop_events(Chat1 *chat,std::vector<Souris *> *pointeur_souris_liste) {
+void Jeu1::loop_events() {
   sf::Event event;
+
   while(main_window->pollEvent(event)) {
       if (event.type == sf::Event::Closed) {
         main_window->close();
@@ -69,7 +71,12 @@ void Jeu1::loop_events(Chat1 *chat,std::vector<Souris *> *pointeur_souris_liste)
         pressed=true;
         main_window->clear();
         main_window->draw(*bg);
-        animation=chat->jouer(main_window,pointeur_souris_liste,&nb_souris_attrape)*20;
+        // animation_duree = chat->jouer(main_window, &souris_liste, &nb_souris_attrape) * 20;
+        if ( chat->jouer(main_window, &souris_liste) == 1 ) {
+            nb_souris_attrape++;
+            animation_duree = 15;
+          }
+
       }
         
   }
@@ -94,9 +101,6 @@ void Jeu1::print_text(int nb_souris_attrape,float nb_souris_attrape_max) {
 
 
 void Jeu1::run_jeu1() {
-
-  Chat1 * chat = new Chat1(main_window);
-  std::vector<Souris *> souris_liste;
   
   float inc_vitesse=1;
   // for (int i = 0; i < nb_souris; i++) {
@@ -159,9 +163,9 @@ void Jeu1::run_jeu1() {
     //     souris_liste[i]->position.x = -130;
     //   }
     // }
-    if (animation>0){
+    if (animation_duree>0){
       main_window->draw(*sprite_sang);
-      animation--;
+      animation_duree--;
 
     }
     main_window->draw(*chat->sprite);
@@ -176,7 +180,7 @@ void Jeu1::run_jeu1() {
     //   main_window->display();
     // }
 
-    loop_events(chat,&souris_liste);
+    loop_events();
 
     if ((nb_souris_attrape/nb_souris_attrape_max)>inc_vitesse/6){
        switch (niveau_jeu)

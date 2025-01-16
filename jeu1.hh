@@ -10,13 +10,15 @@ class Jeu1{
     private :
         int* gameState;
         sf::RenderWindow * main_window;
+
         sf::Font * font;
         sf::Texture * image;
         sf::Sprite * bg;
         sf::Texture * image_sang;
         sf::Sprite * sprite_sang;
+
         bool pressed;
-        int animation;
+        int animation_duree;
 
         int nb_souris_attrape;
         int nb_souris_passe;
@@ -30,11 +32,14 @@ class Jeu1{
         std::vector<std::size_t> text_size;
         std::vector<const char *> options;
 
+        Chat1 *chat;
+        std::vector<Souris *> souris_liste;
+
         void print_text(int nb_souris_attrape,float nb_souris_attrape_max);
 
     protected:
         void set_values();
-        void loop_events(Chat1 *chat,std::vector<Souris *> * pointeur_souris_liste);
+        void loop_events();
         void draw_all();
 
 

@@ -86,10 +86,6 @@ void Menu::loop_events(){
       
       std::cout << options[pos] << '\n';
       *gameState=pos+1;
-      // pour chaque gamestate, on envoie vers une fenetre différente (fenetre vide avec ecrit jeu1, jeu2, jeu3 en fonction du gamestate)
-
-      
-
     }
 
     // if(sf::Mouse::isButtonPressed(sf::Mouse::Left)){
