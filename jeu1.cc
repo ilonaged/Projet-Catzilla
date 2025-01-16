@@ -9,6 +9,8 @@ Jeu1::Jeu1(sf::RenderWindow * main_window,int* gameState,int nb_souris_attrape_m
   font = new sf::Font();
   image = new sf::Texture();
   bg = new sf::Sprite();
+  image_sang=new sf::Texture();
+  sprite_sang=new sf::Sprite();
 
   set_values();
 }
@@ -20,6 +22,8 @@ void Jeu1::set_values(){
   main_window->setPosition(sf::Vector2i(0,0));
 
   pressed=false;
+  animation=0;
+
   nb_souris_attrape=0;
   nb_souris_passe=0;
 
@@ -32,6 +36,9 @@ void Jeu1::set_values(){
     float(windowSize.y) / textureSize.y
   );
   bg->setTexture(*image);
+  image_sang->loadFromFile("./assets/sang.png");
+  sprite_sang->setTexture(*image_sang);
+  sprite_sang->setPosition((int)(main_window->getSize().x/2.6),(int)(main_window->getSize().y/3));
 
   font->loadFromFile("./assets/LVDCGO__.TTF");
   options={"0/0","Press Space to catch the mouse"};
@@ -50,7 +57,7 @@ void Jeu1::set_values(){
 }
 
 
-void Jeu1::loop_events(Chat1 *chat,std::vector<Souris *> souris_liste) {
+void Jeu1::loop_events(Chat1 *chat,std::vector<Souris *> *pointeur_souris_liste) {
   sf::Event event;
   while(main_window->pollEvent(event)) {
       if (event.type == sf::Event::Closed) {
@@ -62,7 +69,7 @@ void Jeu1::loop_events(Chat1 *chat,std::vector<Souris *> souris_liste) {
         pressed=true;
         main_window->clear();
         main_window->draw(*bg);
-        chat->jouer(main_window,souris_liste,&nb_souris_attrape);
+        animation=chat->jouer(main_window,pointeur_souris_liste,&nb_souris_attrape)*20;
       }
         
   }
@@ -76,7 +83,8 @@ void Jeu1::loop_events(Chat1 *chat,std::vector<Souris *> souris_liste) {
 // }
 
 void Jeu1::print_text(int nb_souris_attrape,float nb_souris_attrape_max) {
-  score=std::to_string(nb_souris_attrape)+'/'+std::to_string((int)(nb_souris_attrape_max));
+  // score=std::to_string(nb_souris_attrape)+'/'+std::to_string((int)(nb_souris_attrape_max));
+  score=std::to_string(nb_souris_attrape);
   texts[0].setString(score); 
   main_window->draw(texts[0]);
   if (pressed==false){
@@ -151,6 +159,11 @@ void Jeu1::run_jeu1() {
     //     souris_liste[i]->position.x = -130;
     //   }
     // }
+    if (animation>0){
+      main_window->draw(*sprite_sang);
+      animation--;
+
+    }
     main_window->draw(*chat->sprite);
     print_text(nb_souris_attrape,nb_souris_attrape_max);
     main_window->display();
@@ -163,7 +176,8 @@ void Jeu1::run_jeu1() {
     //   main_window->display();
     // }
 
-    loop_events(chat,souris_liste);
+    loop_events(chat,&souris_liste);
+
     if ((nb_souris_attrape/nb_souris_attrape_max)>inc_vitesse/6){
        switch (niveau_jeu)
       {

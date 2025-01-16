@@ -13,7 +13,10 @@ class Jeu1{
         sf::Font * font;
         sf::Texture * image;
         sf::Sprite * bg;
+        sf::Texture * image_sang;
+        sf::Sprite * sprite_sang;
         bool pressed;
+        int animation;
 
         int nb_souris_attrape;
         int nb_souris_passe;
@@ -31,7 +34,7 @@ class Jeu1{
 
     protected:
         void set_values();
-        void loop_events(Chat1 *chat,std::vector<Souris *> souris_liste);
+        void loop_events(Chat1 *chat,std::vector<Souris *> * pointeur_souris_liste);
         void draw_all();
 
 

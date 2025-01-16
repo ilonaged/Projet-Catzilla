@@ -67,6 +67,7 @@
         "span": "cpp",
         "sstream": "cpp",
         "system_error": "cpp",
-        "deque": "cpp"
+        "deque": "cpp",
+        "text_encoding": "cpp"
     }
 }
