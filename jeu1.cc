@@ -142,8 +142,8 @@ void Jeu1::gestion_vitesse(int * vitesse_souris,float * inc_vitesse){
             (*vitesse_souris)+=8;
       }
       (*inc_vitesse)+=1;
-      std::cout<<"vitesse_souris "<<*vitesse_souris<<std::endl;
-      std::cout<<"inc_vitesse "<<*inc_vitesse<<std::endl;
+      // std::cout<<"vitesse_souris "<<*vitesse_souris<<std::endl;
+      // std::cout<<"inc_vitesse "<<*inc_vitesse<<std::endl;
     }
 
 };
