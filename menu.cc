@@ -88,6 +88,7 @@ void Menu::draw_all(){
 }
 
 void Menu::run(){
+  theselect = false;
   while(main_window->isOpen() && *gameState == 0){
     loop_events();
     draw_all();
