@@ -14,7 +14,7 @@ Jeu1::Jeu1(sf::RenderWindow * main_window,int* gameState,int nb_souris_attrape_m
 
 
 
-void Jeu1::set_values(){
+void Jeu1::set_values() {
   nb_souris_attrape=0;
   nb_souris_passe=0;
   seed = static_cast<unsigned int>(std::chrono::steady_clock::now().time_since_epoch().count());
@@ -43,8 +43,8 @@ void Jeu1::set_values(){
     texts[i].setCharacterSize(text_size[i]);
     texts[i].setOutlineColor(sf::Color::Black);
     texts[i].setPosition(text_coords[i]);
+    texts[i].setOutlineThickness(4);
   }
-  texts[0].setOutlineThickness(4);
 }
 
 

@@ -19,9 +19,9 @@ void Menu::set_values(){
   bg->setTexture(*image);
 
   font->loadFromFile("./assets/LVDCGO__.TTF");
-  options = {"JEU 1", "JEU 2", "JEU 3"};
+  options = {"PLAY", "SETTINGS", "CREDITS"};
   texts.resize(3);
-  text_coords = {{410,225},{410,365},{410,510}};
+  text_coords = {{410,225},{350,365},{370,510}};
   text_size = {30,30,30};
 
   for (std::size_t i{}; i < texts.size(); ++i){
