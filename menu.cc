@@ -19,10 +19,10 @@ void Menu::set_values(){
   bg->setTexture(*image);
 
   font->loadFromFile("./assets/LVDCGO__.TTF");
-  options = {"PLAY", "SETTINGS", "CREDITS"};
-  texts.resize(3);
-  text_coords = {{410,225},{350,365},{370,510}};
-  text_size = {30,30,30};
+  options = {"PLAY", "SETTINGS", "CREDITS", "Use the arrow keys to navigate and Enter to select"};
+  texts.resize(4);
+  text_coords = {{410,225},{350,365},{370,510}, {25, (float)main_window->getSize().y - 50}};
+  text_size = {30,30,30, 20};
 
   for (std::size_t i{}; i < texts.size(); ++i){
    texts[i].setFont(*font); 
@@ -32,6 +32,7 @@ void Menu::set_values(){
    texts[i].setPosition(text_coords[i]);
   }
   texts[0].setOutlineThickness(4);
+  texts[3].setOutlineThickness(4);
 
 }
 
