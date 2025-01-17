@@ -6,7 +6,7 @@
 
 Jeu1::Jeu1(sf::RenderWindow * main_window,int* gameState,int nb_souris_attrape_max,int niveau_jeu): Instance(main_window, gameState),nb_souris_attrape_max(nb_souris_attrape_max),niveau_jeu(niveau_jeu) {
   main_window->setKeyRepeatEnabled(false);
-  chat = new Chat1(main_window);
+  chat = new Chat1(windowSize);
   image_sang=new sf::Texture();
   sprite_sang=new sf::Sprite();
   set_values();
@@ -15,8 +15,6 @@ Jeu1::Jeu1(sf::RenderWindow * main_window,int* gameState,int nb_souris_attrape_m
 
 
 void Jeu1::set_values(){
-  animation_duree=0;
-
   nb_souris_attrape=0;
   nb_souris_passe=0;
   seed = static_cast<unsigned int>(std::chrono::steady_clock::now().time_since_epoch().count());
@@ -52,6 +50,7 @@ void Jeu1::set_values(){
 
 void Jeu1::loop_events() {
   sf::Event event;
+  int resultat_jeu=0;
 
   while(main_window->pollEvent(event)) {
     if (event.type == sf::Event::Closed) {
@@ -61,17 +60,26 @@ void Jeu1::loop_events() {
         windowSize = main_window->getSize();
     }
 
-    if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Space) {
-      pressed=true;
-      // main_window->clear();
-      // main_window->draw(*bg);
-      if ( chat->jouer(main_window, &souris_liste,bg) == 1 ) {
-          nb_souris_attrape++;
-          animation_duree = 15;
-        }
+    if (event.type == sf::Event::KeyPressed){
+      if (event.key.code == sf::Keyboard::Space){
+        pressed=true;
 
+        resultat_jeu=chat->jouer(main_window, &souris_liste,bg);
+        if ( resultat_jeu==1 ) {
+            nb_souris_attrape++;
+          }else if(resultat_jeu==-1){
+            *gameState=5;
+          }
+      }
+      if (event.key.code == sf::Keyboard::Up) {
+        chat->avancer_reculer(1);
+      }
+
+      if (event.key.code == sf::Keyboard::Down) {
+        chat->avancer_reculer(-1);
+
+      }
     }
-        
   }
 }
 
@@ -86,20 +94,20 @@ void Jeu1::draw_all(){
   main_window->draw(*bg);
   for (auto it = souris_liste.begin(); it != souris_liste.end();) {
     (*it)->seDeplacer();
-    main_window->draw(*(*it)->sprite);
+    main_window->draw(*(*it)->getSprite());
 
-    if ((*it)->position.x > main_window->getSize().x) {
+    if ((*it)->getPosition().x > main_window->getSize().x) {
       it = souris_liste.erase(it);
     } else {
       ++it;
     }
   }
-  if (animation_duree>0){
-    main_window->draw(*sprite_sang);
-    animation_duree--;
+  // if (animation_duree>0){
+  //   main_window->draw(*sprite_sang);
+  //   animation_duree--;
 
-  }
-  main_window->draw(*chat->sprite);
+  // }
+  main_window->draw(*chat->getSprite());
   print_text(nb_souris_attrape,nb_souris_attrape_max);
 }
 
@@ -140,6 +148,31 @@ void Jeu1::gestion_vitesse(int * vitesse_souris,float * inc_vitesse){
 
 };
 
+void Jeu1::genere_objet(int vitesse_souris){
+  if (nb_souris_attrape/nb_souris_attrape_max>0.33333){
+    if (nb_souris_passe%2){
+       if (nb_souris_attrape/nb_souris_attrape_max>0.5 && nb_souris_passe%6){
+        souris_liste.push_back(new Souris_expl(windowSize,vitesse_souris,false));
+      }else{
+        souris_liste.push_back(new Souris(windowSize,vitesse_souris,true));
+      }
+    }else{
+  
+       if (nb_souris_attrape/nb_souris_attrape_max>0.5 && nb_souris_passe%6){
+        souris_liste.push_back(new Souris_expl(windowSize,vitesse_souris,true));
+      }else{
+        souris_liste.push_back(new Souris(windowSize,vitesse_souris,false));
+      }
+
+    }
+
+
+  }else{
+    // souris_liste.push_back(new Souris(windowSize,vitesse_souris,false));
+    souris_liste.push_back(new Souris(windowSize,vitesse_souris,false));
+  }
+
+}
 
 
 void Jeu1::run() {
@@ -166,7 +199,7 @@ void Jeu1::run() {
     auto elapsed_time = std::chrono::duration_cast<std::chrono::milliseconds>(current_time - last_spawn_time).count();
 
     if (elapsed_time > spawn_interval) {
-      souris_liste.push_back(new Souris(main_window,vitesse_souris));
+      genere_objet(vitesse_souris);
       if (pressed){
         nb_souris_passe++;
       }

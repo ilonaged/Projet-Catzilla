@@ -4,10 +4,14 @@
 #include "souris.hh"
 
 class Chat1: public Objet {
-public:
+protected : 
     sf::Texture * image2;
+    bool est_en_haut;
 
-    Chat1(sf::RenderWindow * main_window);
-    int jouer(sf::RenderWindow * main_window,std::vector<Souris *> * pointeur_souris_liste,sf::Sprite * bg);
+public:
+    Chat1(sf::Vector2u windowSize);
+    int jouer(sf::RenderWindow * main_window,std::vector<Objet *> * pointeur_liste,sf::Sprite * bg);
+    void seDeplacer();
+    void avancer_reculer(int deplacement);
 
 };

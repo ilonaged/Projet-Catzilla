@@ -3,8 +3,13 @@
 #include "objet.hh"
 
 class Souris: public Objet {
+protected:
+    sf::Texture * image_expl;
+    sf::Sprite * sprite_expl;
+
 public:
-    int vitesse_souris;
-    Souris(sf::RenderWindow * main_window,int vitesse_souris);
+    Souris(sf::Vector2u windowSize,int vitesse_souris,bool haut);
+    Souris();
     void seDeplacer();
+    virtual void explosion(sf::RenderWindow * main_window);
 };
