@@ -5,6 +5,7 @@
 #include "chat1.hh"
 #include "objet.hh"
 #include "souris_expl.hh"
+#include "bestiole.hh"
 
 class Jeu1: public Instance{
     private :

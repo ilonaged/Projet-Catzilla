@@ -13,7 +13,7 @@ int main(int argc, char **argv) {
     //SI gameState vaut 0 on est sur le menu, gameState vaut 1 on est sur le jeu 1, gameState vaut 2 on est sur jeu 2, gameState vaut 3 on est sur le jeu 3
     int gamestate = 0;
 
-    int nb_souris_attrape_max=20;
+    int nb_souris_attrape_max=40;
     int niveau_jeu=2;
     
     Menu * menu = new Menu(&main_window, &gamestate);

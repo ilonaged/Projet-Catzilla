@@ -1,8 +1,14 @@
-
+#pragma once
 #include "objet.hh"
 
-class bestiole : public Objet{
+class Bestiole : public Objet{
+protected:
+    // sf::Texture * image_expl;
+    // sf::Sprite * sprite_expl;
+    int pos_hor_init;
 
 public : 
-    void seDeplacer(){};
+    Bestiole(sf::Vector2u windowSize,int vitesse_objet,bool haut);
+    ~Bestiole();
+    void seDeplacer();
 };

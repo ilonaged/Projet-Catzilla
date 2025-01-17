@@ -33,7 +33,8 @@ void FinJeu1::set_values(){
 
     }else{
         image->loadFromFile("./assets/arc_en_ciel.png");
-         score="votre score est de "+std::to_string(nb_souris_attrape)+" pour "+std::to_string(nb_souris_attrape_max)+" souris passees !! (difficulte : "+ std::to_string(niveau_jeu)+")";
+        //  score="votre score est de "+std::to_string(nb_souris_attrape)+" pour "+std::to_string(nb_souris_attrape_max)+" souris passees !! (difficulte : "+ std::to_string(niveau_jeu)+")";
+        score="votre score est de "+std::to_string(nb_souris_attrape)+" (niveau "+std::to_string(nb_souris_attrape_max)+":"+ std::to_string(niveau_jeu)+")";
         options = {"Bravo", "Veuillez appuyer sur entrer pour revenir au menu",score.c_str()};
         texts.resize(3);
         text_coords = {{410,225},{100,365},{100,510}};

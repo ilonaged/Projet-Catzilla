@@ -3,6 +3,7 @@
 #include <random>
 #include <chrono>
 #include <string>
+#include <cstdlib>
 
 Jeu1::Jeu1(sf::RenderWindow * main_window,int* gameState,int nb_souris_attrape_max,int niveau_jeu): Instance(main_window, gameState),nb_souris_attrape_max(nb_souris_attrape_max),niveau_jeu(niveau_jeu) {
   main_window->setKeyRepeatEnabled(false);
@@ -149,27 +150,36 @@ void Jeu1::gestion_vitesse(int * vitesse_souris,float * inc_vitesse){
 };
 
 void Jeu1::genere_objet(int vitesse_souris){
+  int choix_alea = 1+rand()%10;
+  bool haut=false;
   if (nb_souris_attrape/nb_souris_attrape_max>0.33333){
-    if (nb_souris_passe%2){
-       if (nb_souris_attrape/nb_souris_attrape_max>0.5 && nb_souris_passe%6){
-        souris_liste.push_back(new Souris_expl(windowSize,vitesse_souris,false));
-      }else{
-        souris_liste.push_back(new Souris(windowSize,vitesse_souris,true));
-      }
+    if (nb_souris_passe%2)
+        haut=true;
+
+    if (nb_souris_passe/nb_souris_attrape_max>0.5){
+       if(0<choix_alea && choix_alea<5)
+        souris_liste.push_back(new Souris(windowSize,vitesse_souris,haut));
+      if (4<choix_alea && choix_alea<7)
+        souris_liste.push_back(new Bestiole(windowSize,vitesse_souris,haut));
+      if (6<choix_alea && choix_alea<11)
+        souris_liste.push_back(new Souris_expl(windowSize,vitesse_souris,haut));
+
     }else{
-  
-       if (nb_souris_attrape/nb_souris_attrape_max>0.5 && nb_souris_passe%6){
-        souris_liste.push_back(new Souris_expl(windowSize,vitesse_souris,true));
+
+      if(0<choix_alea && choix_alea<8){
+        souris_liste.push_back(new Souris(windowSize,vitesse_souris,haut));
       }else{
-        souris_liste.push_back(new Souris(windowSize,vitesse_souris,false));
+        souris_liste.push_back(new Bestiole(windowSize,vitesse_souris,haut));
       }
-
     }
-
+  haut=false;
 
   }else{
-    // souris_liste.push_back(new Souris(windowSize,vitesse_souris,false));
-    souris_liste.push_back(new Souris(windowSize,vitesse_souris,false));
+    if(0<choix_alea && choix_alea<8){
+      souris_liste.push_back(new Souris(windowSize,vitesse_souris,false));
+    }else{
+      souris_liste.push_back(new Bestiole(windowSize,vitesse_souris,false));
+    }
   }
 
 }
