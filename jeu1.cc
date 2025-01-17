@@ -8,8 +8,7 @@
 Jeu1::Jeu1(sf::RenderWindow * main_window,int* gameState,int nb_souris_attrape_max,int niveau_jeu): Instance(main_window, gameState),nb_souris_attrape_max(nb_souris_attrape_max),niveau_jeu(niveau_jeu) {
   main_window->setKeyRepeatEnabled(false);
   chat = new Chat1(windowSize);
-  image_sang=new sf::Texture();
-  sprite_sang=new sf::Sprite();
+
   set_values();
 }
 
@@ -22,16 +21,11 @@ void Jeu1::set_values() {
 
   image->loadFromFile("./assets/game1-floor.png");
   sf::Vector2u textureSize = image->getSize();
-  bg->setScale(
+  map_sprites["bg"]->setScale(
     float(windowSize.x) / textureSize.x,
     float(windowSize.y) / textureSize.y
   );
-  bg->setTexture(*image);
-
-
-  image_sang->loadFromFile("./assets/sang.png");
-  sprite_sang->setTexture(*image_sang);
-  sprite_sang->setPosition((int)(main_window->getSize().x/2.6),(int)(main_window->getSize().y/3));
+  map_sprites["bg"]->setTexture(*image);
 
   font->loadFromFile("./assets/LVDCGO__.TTF");
   options={"0/0","Press Space to catch the mouse"};
@@ -65,7 +59,7 @@ void Jeu1::loop_events() {
       if (event.key.code == sf::Keyboard::Space){
         pressed=true;
 
-        resultat_jeu=chat->jouer(main_window, &souris_liste,bg);
+        resultat_jeu=chat->jouer(main_window, &souris_liste,map_sprites["bg"]);
         if ( resultat_jeu==1 ) 
             nb_souris_attrape++;
           
@@ -95,7 +89,7 @@ void Jeu1::loop_events() {
 // }
 
 void Jeu1::draw_all(){
-  main_window->draw(*bg);
+  main_window->draw(*map_sprites["bg"]);
   for (auto it = souris_liste.begin(); it != souris_liste.end();) {
     (*it)->seDeplacer();
     main_window->draw(*(*it)->getSprite());

@@ -8,7 +8,7 @@ Menu::Menu(sf::RenderWindow * main_window,int* gameState):Instance(main_window,g
 Menu::~Menu(){
   delete font;
   delete image;
-  delete bg;
+  // delete bg;
 }
 
 void Menu::set_values(){
@@ -16,7 +16,7 @@ void Menu::set_values(){
   theselect = false;
 
   image->loadFromFile("./assets/menu-catzilla.png");
-  bg->setTexture(*image);
+  map_sprites["bg"]->setTexture(*image);
 
   font->loadFromFile("./assets/LVDCGO__.TTF");
   options = {"PLAY", "SETTINGS", "CREDITS", "Use the arrow keys to navigate and Enter to select"};
@@ -81,7 +81,7 @@ void Menu::loop_events(){
 
 void Menu::draw_all(){
   main_window->clear();
-  main_window->draw(*bg);
+  main_window->draw(*map_sprites["bg"]);
   for(auto t : texts){
    main_window->draw(t); 
   }

@@ -11,7 +11,7 @@ FinJeu1::FinJeu1(sf::RenderWindow * main_window,int* gameState,int nb_souris_att
 FinJeu1::~FinJeu1(){
   delete font;
   delete image;
-  delete bg;
+  // delete bg;
 }
 
 void FinJeu1::set_values(){
@@ -48,9 +48,9 @@ void FinJeu1::set_values(){
         }
     }
   
-  bg->setTexture(*image);
+  map_sprites["bg"]->setTexture(*image);
     sf::Vector2u textureSize = image->getSize();
-    bg->setScale(
+    map_sprites["bg"]->setScale(
     float(windowSize.x) / textureSize.x,
     float(windowSize.y) / textureSize.y
   );
@@ -77,7 +77,7 @@ void FinJeu1::loop_events(){
 
 void FinJeu1::draw_all(){
   main_window->clear();
-  main_window->draw(*bg);
+  main_window->draw(*map_sprites["bg"]);
   for(auto t : texts){
    main_window->draw(t); 
   }

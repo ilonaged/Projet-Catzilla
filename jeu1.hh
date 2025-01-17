@@ -9,9 +9,6 @@
 
 class Jeu1: public Instance{
     private :
-        sf::Texture * image_sang;
-        sf::Sprite * sprite_sang;
-
         int nb_souris_attrape;
         int nb_souris_passe;
         float nb_souris_attrape_max;

@@ -4,7 +4,8 @@
  Instance::Instance(sf::RenderWindow * main_window, int* gameState):gameState(gameState),main_window(main_window){
     font = new sf::Font();
     image = new sf::Texture();
-    bg = new sf::Sprite();
+    // bg=new sf::Sprite();
+    map_sprites["bg"]=new sf::Sprite();
     set_values_instance();
  };
 
@@ -12,7 +13,7 @@
 Instance::~Instance() {
     delete(font);
     delete(image);
-    delete(bg);
+    delete(map_sprites["bg"]);
    
 }
 
@@ -46,7 +47,7 @@ void Instance::loop_events(){
 void Instance::run(){
     while(main_window->isOpen()){
         main_window->clear();
-        main_window->draw(*bg);
+        main_window->draw(*map_sprites["bg"]);
         main_window->display();
         loop_events();
     }

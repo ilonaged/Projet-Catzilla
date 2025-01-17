@@ -5,11 +5,12 @@
 class Souris: public Objet {
 protected:
     sf::Texture * image_expl;
-    sf::Sprite * sprite_expl;
 
 public:
     Souris(sf::Vector2u windowSize,int vitesse_souris,bool haut);
     Souris();
     void seDeplacer();
-    virtual void explosion(sf::RenderWindow * main_window);
+    // virtual void explosion(sf::RenderWindow * main_window);
+    void explosion(sf::RenderWindow * main_window);
+
 };

@@ -1,16 +1,18 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include <iostream>
+#include <map>
 
 class Instance {
     protected:
         int* gameState;
         sf::RenderWindow * main_window;
         sf::Vector2u windowSize;
+        
 
         sf::Font * font;
         sf::Texture * image;
-        sf::Sprite * bg;
+        std::map<std::string,sf::Sprite *> map_sprites;
 
         bool pressed;
 

@@ -4,16 +4,16 @@ Souris::Souris(sf::Vector2u windowSize,int vitesse_souris,bool haut){
     vitesse=vitesse_souris; 
     position.x = -130;
     image_expl = new sf::Texture();
-    sprite_expl = new sf::Sprite();
+    map_sprites_explosion["explosion"]= new sf::Sprite();
     image_expl->loadFromFile("./assets/sang.png");
-    sprite_expl->setTexture(*image_expl);
+    map_sprites_explosion["explosion"]->setTexture(*image_expl);
      if (haut){
         position.y = (int)(windowSize.y/3);
-        sprite_expl->setPosition(windowSize.x/2.6,(windowSize.y/4.6));
+        map_sprites_explosion["explosion"]->setPosition(windowSize.x/2.6,(windowSize.y/4.6));
 
     }else{
         position.y = (int)(windowSize.y/3)+150;
-        sprite_expl->setPosition(windowSize.x/2.6,(windowSize.y/4.6)+150);
+        map_sprites_explosion["explosion"]->setPosition(windowSize.x/2.6,(windowSize.y/4.6)+150);
     }
     image->loadFromFile("./assets/mouse-sprite2.png");
     sprite->setTexture(*image);
@@ -39,5 +39,9 @@ void Souris::seDeplacer(){
 
 
 void Souris::explosion(sf::RenderWindow * main_window){
-    main_window->draw(*sprite_expl);
+    // main_window->draw(*map_sprites_explosion["explosion"]);
+     for (auto it : map_sprites_explosion){
+        main_window->draw(*it.second);
+
+    }
 }
