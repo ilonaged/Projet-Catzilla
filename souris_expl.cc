@@ -21,11 +21,17 @@ Souris_expl::Souris_expl(sf::Vector2u windowSize,int vitesse_souris,bool haut){
     image->loadFromFile("./assets/angry_mouse2.png");
     sprite->setTexture(*image);
     sprite->setPosition(position);
+    image_expl2 = new sf::Texture();
+    sprite_expl2 = new sf::Sprite();
+    image_expl2->loadFromFile("./assets/explosion_bonus.png");
+    sprite_expl2->setTexture(*image_expl2);
 }
 
 
 
 void Souris_expl::explosion(sf::RenderWindow * main_window){
     main_window->draw(*sprite_expl);
+    main_window->draw(*sprite_expl2);
+
     
 }

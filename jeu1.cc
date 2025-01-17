@@ -66,11 +66,14 @@ void Jeu1::loop_events() {
         pressed=true;
 
         resultat_jeu=chat->jouer(main_window, &souris_liste,bg);
-        if ( resultat_jeu==1 ) {
+        if ( resultat_jeu==1 ) 
             nb_souris_attrape++;
-          }else if(resultat_jeu==-1){
+          
+        if(resultat_jeu==-1)
             *gameState=5;
-          }
+        if(resultat_jeu==2){
+          nb_souris_attrape+=3;
+        }
       }
       if (event.key.code == sf::Keyboard::Up) {
         chat->avancer_reculer(1);
@@ -103,11 +106,6 @@ void Jeu1::draw_all(){
       ++it;
     }
   }
-  // if (animation_duree>0){
-  //   main_window->draw(*sprite_sang);
-  //   animation_duree--;
-
-  // }
   main_window->draw(*chat->getSprite());
   print_text(nb_souris_attrape,nb_souris_attrape_max);
 }

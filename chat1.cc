@@ -61,7 +61,21 @@ int Chat1::jouer(sf::RenderWindow * main_window,std::vector<Objet *> *pointeur_l
         }
         if((*pointeur_liste)[ind_souris_morte]->getEst_explosif()){
             attrape=-1;
+            for (int i = 0 ; i < 20 ; i++) {
+            main_window->clear();
+            main_window->draw(*bg);
+            for (std::size_t i = 0; i < pointeur_liste->size(); ++i) {
+                if(i!=ind_souris_morte){
+                    main_window->draw(*(*(*pointeur_liste)[i])());
+                }
+            }
+            (*pointeur_liste)[ind_souris_morte]->explosion(main_window);
+            main_window->draw(*sprite);
+            main_window->display();
+            }
         }
+        if((*pointeur_liste)[ind_souris_morte]->getEst_bestiole())
+            attrape=2;
         pointeur_liste->erase(pointeur_liste->begin()+ind_souris_morte);
     }
     return attrape;

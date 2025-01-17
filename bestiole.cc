@@ -4,6 +4,7 @@
 
 
 Bestiole::Bestiole(sf::Vector2u windowSize,int vitesse_objet,bool haut){
+    est_bestiole=true;
     vitesse=vitesse_objet; 
     position.x = -130;
     // image_expl = new sf::Texture();
