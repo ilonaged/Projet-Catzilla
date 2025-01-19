@@ -6,6 +6,7 @@
 #include <cstdlib>
 
 Jeu1::Jeu1(sf::RenderWindow * main_window,int* gameState,int nb_souris_attrape_max,int niveau_jeu): Instance(main_window, gameState),nb_souris_attrape_max(nb_souris_attrape_max),niveau_jeu(niveau_jeu) {
+  //permet de rendre le "spam" de la touche espace impossible pour éviter la triche...
   main_window->setKeyRepeatEnabled(false);
   chat = new Chat1(windowSize);
 
@@ -13,14 +14,19 @@ Jeu1::Jeu1(sf::RenderWindow * main_window,int* gameState,int nb_souris_attrape_m
 }
 
 
-
+// permet de définir des valeurs par défaut aux attributs de Jeu1
 void Jeu1::set_values() {
   nb_souris_attrape=0;
   nb_souris_passe=0;
+
+  //variables internes permettant de gérer l'affichage des intructions
   inc_pressed_up_key=0;
   pressed_up_key=true;
+
+
   seed = static_cast<unsigned int>(std::chrono::steady_clock::now().time_since_epoch().count());
 
+//gestion de l'affichage du fond de jeu : le sol
   image->loadFromFile("./assets/game1-floor.png");
   sf::Vector2u textureSize = image->getSize();
   map_sprites["bg"]->setScale(
@@ -29,6 +35,7 @@ void Jeu1::set_values() {
   );
   map_sprites["bg"]->setTexture(*image);
 
+//gestion de l'affichage de tous les textes : instructions de jeu et score
   font->loadFromFile("./assets/LVDCGO__.TTF");
   options={"0/0","Press Space to catch the mouse","Use the up and down keys to move the cat"};
   texts.resize(3);
@@ -49,6 +56,8 @@ void Jeu1::set_values() {
 }
 
 
+
+//permet de gérer les évènements du jeu 
 void Jeu1::loop_events() {
   sf::Event event;
   int resultat_jeu=0;
@@ -62,6 +71,7 @@ void Jeu1::loop_events() {
         windowSize = main_window->getSize();
     }
 
+    //Si la touche espace est pressée alors on appelle la méthode jouer du chat
     if (event.type == sf::Event::KeyPressed){
       if (event.key.code == sf::Keyboard::Space){
         pressed=true;
@@ -69,6 +79,7 @@ void Jeu1::loop_events() {
           pressed_up_key=false;
         inc_pressed_up_key++;
 
+        //la méthode retourne 1 si une souris a été attrapé, -1 si le chat a attrapé une souris explosive et 2 si le chat a touché une bestiole
         resultat_jeu=chat->jouer(main_window, &souris_liste,map_sprites["bg"]);
         if ( resultat_jeu==1 ) {
             nb_souris_attrape++;
@@ -81,6 +92,8 @@ void Jeu1::loop_events() {
           nb_souris_attrape+=3;
         }
       }
+
+      //permet de gérer les déplacement du chat
       if (event.key.code == sf::Keyboard::Up) {
         pressed_up_key=true;
         chat->avancer_reculer(1);
@@ -95,6 +108,9 @@ void Jeu1::loop_events() {
 }
 
 
+
+//la fonction draw_all() effectue comme son nom l'indique tout les draw nécessaires au jeu1 tels que 
+//l'affichage du sol, l'affichage des objets traversant la pièce et le chat...
 void Jeu1::draw_all(){
   main_window->draw(*map_sprites["bg"]);
   for (auto it = souris_liste.begin(); it != souris_liste.end();) {
@@ -113,12 +129,7 @@ void Jeu1::draw_all(){
 
 
 
-// void Jeu1::draw_all() {
-//   main_window->clear();
-//   main_window->draw(*bg);
-//   main_window->display();
-// }
-
+//permet d'afficher le texte sur le jeu1
 void Jeu1::print_text(int nb_souris_attrape,float nb_souris_attrape_max) {
   score=std::to_string(nb_souris_attrape);
   texts[0].setString(score); 
@@ -131,6 +142,8 @@ void Jeu1::print_text(int nb_souris_attrape,float nb_souris_attrape_max) {
   }
 }
 
+
+//permet de gérer la vitesse des objets en fonction du niveau du jeu
 void Jeu1::gestion_vitesse(int * vitesse_souris,float * inc_vitesse){
   if ((nb_souris_attrape/nb_souris_attrape_max)>(*inc_vitesse)/6){
        switch (niveau_jeu)
@@ -151,6 +164,10 @@ void Jeu1::gestion_vitesse(int * vitesse_souris,float * inc_vitesse){
 
 };
 
+
+
+//permet de générer les objets traversant le sol de manière aléatoire en type souris, souris explosive, bestioles ainsi que sur 
+// sur le chemin du haut ou du bas
 void Jeu1::genere_objet(int vitesse_souris){
   int choix_alea = 1+rand()%10;
   bool haut=false;
@@ -187,21 +204,25 @@ void Jeu1::genere_objet(int vitesse_souris){
 }
 
 
+
 void Jeu1::run() {
   std::default_random_engine generator(seed);
   std::uniform_int_distribution<int> distribution(200, 3000); // intervalle de temps aléatoire entre 0.2 et 3 secondes
   auto last_spawn_time = std::chrono::steady_clock::now();
+  //génère un intervalle aléatoire 
   int spawn_interval = distribution(generator);
 
   float inc_vitesse=1;
   int vitesse_souris=10;
 
+//on reste dans la fonction tant que le gameState correspond à Jeu1
   while(main_window->isOpen() && *gameState == 1) {
     main_window->clear();
 
     auto current_time = std::chrono::steady_clock::now();
     auto elapsed_time = std::chrono::duration_cast<std::chrono::milliseconds>(current_time - last_spawn_time).count();
 
+    //permet de générer de manière aléatoire en temps les objets
     if (elapsed_time > spawn_interval) {
       genere_objet(vitesse_souris);
       if (pressed){
