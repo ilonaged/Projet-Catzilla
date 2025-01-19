@@ -42,6 +42,10 @@ void Jeu1::set_values() {
     texts[i].setPosition(text_coords[i]);
     texts[i].setOutlineThickness(4);
   }
+
+  if (!music.openFromFile("./assets/meow.ogg")) {
+    std::cerr << "Error loading sound file" << std::endl;
+  }
 }
 
 
@@ -51,6 +55,7 @@ void Jeu1::loop_events() {
 
   while(main_window->pollEvent(event)) {
     if (event.type == sf::Event::Closed) {
+      music.stop();
       main_window->close();
     }
     if (event.type == sf::Event::Resized){
@@ -65,9 +70,11 @@ void Jeu1::loop_events() {
         inc_pressed_up_key++;
 
         resultat_jeu=chat->jouer(main_window, &souris_liste,map_sprites["bg"]);
-        if ( resultat_jeu==1 ) 
+        if ( resultat_jeu==1 ) {
             nb_souris_attrape++;
-          
+            music.stop();
+            music.play();
+        }
         if(resultat_jeu==-1)
             *gameState=5;
         if(resultat_jeu==2){

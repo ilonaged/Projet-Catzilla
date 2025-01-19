@@ -34,12 +34,16 @@ void Menu::set_values(){
   texts[0].setOutlineThickness(4);
   texts[3].setOutlineThickness(4);
 
+  music.openFromFile("./assets/Dark-Meow.ogg");
+  music.setLoop(true);
+  music.play();
 }
 
 void Menu::loop_events(){
   sf::Event event;
   while(main_window->pollEvent(event)) {
       if (event.type == sf::Event::Closed) {
+        music.stop();
         main_window->close();
       }
       if (event.type == sf::Event::Resized){
@@ -75,6 +79,7 @@ void Menu::loop_events(){
       
       std::cout << options[pos] << '\n';
       *gameState=pos+1;
+      music.stop();
     }
   }
 }

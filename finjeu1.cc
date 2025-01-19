@@ -36,19 +36,12 @@ void FinJeu1::set_values(){
 
     } else {
         image->loadFromFile("./assets/rainbow.png");
-        //score = "Your score is " + std::to_string(nb_souris_attrape)+" mice caught out of "+std::to_string(nb_souris_attrape_max)+" that appeared!! (Difficulty: "+ std::to_string(niveau_jeu)+")";
-        //score="Your score is "+std::to_string(nb_souris_attrape)+" (level "+std::to_string(nb_souris_attrape_max)+":"+ std::to_string(niveau_jeu)+")";
-        score = std::to_string(nb_souris_attrape) + " mice caught out of "+std::to_string(nb_souris_attrape_max)+" that appeared!";
+        score = "Your score is " + std::to_string(nb_souris_attrape);
         std::string difficulty = "Difficulty: "+ std::to_string(niveau_jeu);
-        options = {"Congratulations!", "Press Enter to go back to the menu",
-                  "Your score is: ", score.c_str(), difficulty.c_str()
-                  };
-
+        options = {"Congratulations!", "Press Enter to go back to the menu", score.c_str(), difficulty.c_str()};
         texts.resize(options.size());
-        text_coords = {{340,170}, {210,650},
-                      {400,300}, {160,380}, {470,450},
-                      };
-        text_size = {30, 20, 30, 22, 22};
+        text_coords = {{340,170}, {210,650}, {410,380}, {470,450}};
+        text_size = {30, 20, 22, 22};
         for (std::size_t i{}; i < texts.size(); ++i){
           texts[i].setFont(*font); 
           texts[i].setString(options[i]); 
@@ -74,6 +67,7 @@ void FinJeu1::loop_events(){
   sf::Event event;
   while(main_window->pollEvent(event)) {
       if (event.type == sf::Event::Closed) {
+        music.stop();
         main_window->close();
       }
       if (event.type == sf::Event::Resized){
