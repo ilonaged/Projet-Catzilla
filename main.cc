@@ -38,11 +38,11 @@ int main(int argc, char **argv) {
             credits->run();
         }
         if (gamestate==4){
-            FinJeu1 * fin_jeu1 = new FinJeu1(&main_window, &gamestate,jeu1->getScore(),nb_souris_attrape_max,niveau_jeu,false);
+            FinJeu1 * fin_jeu1 = new FinJeu1(&main_window, &gamestate,jeu1->getScore(),niveau_jeu,false);
             fin_jeu1->run();
         }
         if (gamestate==5){
-            FinJeu1 * fin_jeu1 = new FinJeu1(&main_window, &gamestate,jeu1->getScore(),nb_souris_attrape_max,niveau_jeu,true);
+            FinJeu1 * fin_jeu1 = new FinJeu1(&main_window, &gamestate,jeu1->getScore(),niveau_jeu,true);
             fin_jeu1->run();
         }
         

@@ -1,7 +1,7 @@
 #include "finjeu1.hh"
 #include <string>
 
-FinJeu1::FinJeu1(sf::RenderWindow * main_window,int* gameState,int nb_souris_attrape,int nb_souris_attrape_max,int niveau_jeu,bool is_game_over):Instance(main_window,gameState),nb_souris_attrape(nb_souris_attrape),nb_souris_attrape_max(nb_souris_attrape_max),niveau_jeu(niveau_jeu),is_game_over(is_game_over){
+FinJeu1::FinJeu1(sf::RenderWindow * main_window,int* gameState,int nb_souris_attrape,int niveau_jeu,bool is_game_over):Instance(main_window,gameState),nb_souris_attrape(nb_souris_attrape),niveau_jeu(niveau_jeu),is_game_over(is_game_over){
 
   set_values();
 }

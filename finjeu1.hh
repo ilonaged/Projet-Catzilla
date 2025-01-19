@@ -8,7 +8,6 @@ class FinJeu1 : public Instance {
     private:
 
         int nb_souris_attrape;
-        int nb_souris_attrape_max;
         int niveau_jeu;
         bool is_game_over;
 
@@ -21,7 +20,7 @@ class FinJeu1 : public Instance {
 
 
     public:
-        FinJeu1(sf::RenderWindow * main_window, int* gameState, int nb_souris_attrape,int nb_souris_attrape_max,int niveau_jeu,bool is_game_over);
+        FinJeu1(sf::RenderWindow * main_window, int* gameState, int nb_souris_attrape,int niveau_jeu,bool is_game_over);
         ~FinJeu1();
         void run();
 };
