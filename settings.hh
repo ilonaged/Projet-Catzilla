@@ -24,5 +24,5 @@ class Settings : public Instance {
         ~Settings();
         void run();
 
-        void changeLevel(int* level_pos, int* level);
+        void changeLevel(int level_pos, int* level);
 };

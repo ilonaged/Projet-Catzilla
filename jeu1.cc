@@ -185,17 +185,9 @@ void Jeu1::run() {
 
   float inc_vitesse=1;
   int vitesse_souris=10;
-  sf::Texture *image2 = new sf::Texture();
-  image2->loadFromFile("./assets/pointeur.png");
-  sf::Sprite * pointeur=new sf::Sprite();
-  pointeur->setTexture(*image2);
-  pointeur->setPosition(main_window->getSize().x/2.45,main_window->getSize().y/1.85);
-  pointeur->setScale(sf::Vector2f(0.5f,0.5f));
-
 
   while(main_window->isOpen() && *gameState == 1) {
     main_window->clear();
-    main_window->draw(*pointeur);
 
     auto current_time = std::chrono::steady_clock::now();
     auto elapsed_time = std::chrono::duration_cast<std::chrono::milliseconds>(current_time - last_spawn_time).count();

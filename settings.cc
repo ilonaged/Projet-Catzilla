@@ -114,7 +114,7 @@ void Settings::loop_events() {
                 texts_settings[1][level_pos].setOutlineThickness(0);
 
                 // Appliquer le niveau sélectionné
-                changeLevel(&level_pos, level);
+                changeLevel(level_pos, level);
 
                 
                 texts_settings[0][1].setOutlineThickness(4); 
@@ -140,18 +140,8 @@ void Settings::draw_all(){
     main_window->display();
 }
 
-void Settings::changeLevel(int* level_pos, int* level) {
-    switch (*level_pos) {
-        case 0:
-            *level = 1;
-            break;
-        case 1:
-            *level = 2;
-            break;
-        case 2:
-            *level = 3;
-            break;
-    }
+void Settings::changeLevel(int level_pos, int* level) {
+    *level = level_pos + 1;
 }
 
 

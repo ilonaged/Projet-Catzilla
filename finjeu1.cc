@@ -17,34 +17,43 @@ FinJeu1::~FinJeu1(){
 void FinJeu1::set_values(){
 
     if (is_game_over){
-        image->loadFromFile("./assets/game_over.png");
-        score="votre score etait de "+std::to_string(nb_souris_attrape);
-        options = {"GAME OVER","Veuillez appuyer sur entrer pour revenir au menu",score.c_str()};
+        image->loadFromFile("./assets/gameover.png");
+        score="Your score is "+std::to_string(nb_souris_attrape);
+        options = {"GAME OVER","Press Enter to go back to the menu",score.c_str()};
         texts.resize(3);
-        text_coords = {{410,225},{100,365},{100,510}};
-        text_size = {30,15,15};
+        text_coords = {{360,50},{210,650},{410,150}};
+        text_size = {50,20,22};
         for (std::size_t i{}; i < texts.size(); ++i){
-        texts[i].setFont(*font); 
-        texts[i].setString(options[i]); 
-        texts[i].setCharacterSize(text_size[i]);
-        texts[i].setOutlineColor(sf::Color::Black);
-        texts[i].setPosition(text_coords[i]);
+          texts[i].setFont(*font); 
+          texts[i].setString(options[i]); 
+          texts[i].setCharacterSize(text_size[i]);
+          texts[i].setOutlineColor(sf::Color::Black);
+          texts[i].setPosition(text_coords[i]);
         }
+        texts[0].setFillColor(sf::Color::Red);
 
     }else{
-        image->loadFromFile("./assets/arc_en_ciel.png");
-        //  score="votre score est de "+std::to_string(nb_souris_attrape)+" pour "+std::to_string(nb_souris_attrape_max)+" souris passees !! (difficulte : "+ std::to_string(niveau_jeu)+")";
-        score="votre score est de "+std::to_string(nb_souris_attrape)+" (niveau "+std::to_string(nb_souris_attrape_max)+":"+ std::to_string(niveau_jeu)+")";
-        options = {"Bravo", "Veuillez appuyer sur entrer pour revenir au menu",score.c_str()};
-        texts.resize(3);
-        text_coords = {{410,225},{100,365},{100,510}};
-        text_size = {30,15,15};
+        image->loadFromFile("./assets/rainbow.png");
+        //score = "Your score is " + std::to_string(nb_souris_attrape)+" mice caught out of "+std::to_string(nb_souris_attrape_max)+" that appeared!! (Difficulty: "+ std::to_string(niveau_jeu)+")";
+        //score="Your score is "+std::to_string(nb_souris_attrape)+" (level "+std::to_string(nb_souris_attrape_max)+":"+ std::to_string(niveau_jeu)+")";
+        score = std::to_string(nb_souris_attrape) + " mice caught out of "+std::to_string(nb_souris_attrape_max)+" that appeared!";
+        std::string difficulty = "Difficulty: "+ std::to_string(niveau_jeu);
+        options = {"Congratulations!", "Press Enter to go back to the menu",
+                  "Your score is: ", score.c_str(), difficulty.c_str()
+                  };
+
+        texts.resize(options.size());
+        text_coords = {{340,170}, {210,650},
+                      {400,300}, {160,380}, {470,450},
+                      };
+        text_size = {30, 20, 30, 22, 22};
         for (std::size_t i{}; i < texts.size(); ++i){
-        texts[i].setFont(*font); 
-        texts[i].setString(options[i]); 
-        texts[i].setCharacterSize(text_size[i]);
-        texts[i].setOutlineColor(sf::Color::Black);
-        texts[i].setPosition(text_coords[i]);
+          texts[i].setFont(*font); 
+          texts[i].setString(options[i]); 
+          texts[i].setCharacterSize(text_size[i]);
+          texts[i].setOutlineColor(sf::Color::Black);
+          texts[i].setPosition(text_coords[i]);
+          texts[i].setOutlineThickness(2);
         }
     }
   
