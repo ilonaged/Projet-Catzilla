@@ -14,6 +14,9 @@ class Jeu1: public Instance{
         float nb_souris_attrape_max;
         int niveau_jeu;
         unsigned int seed;
+        int inc_pressed_up_key;
+        bool pressed_up_key;
+        
 
         std::string score;
 

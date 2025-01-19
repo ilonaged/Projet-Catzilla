@@ -17,6 +17,8 @@ Jeu1::Jeu1(sf::RenderWindow * main_window,int* gameState,int nb_souris_attrape_m
 void Jeu1::set_values() {
   nb_souris_attrape=0;
   nb_souris_passe=0;
+  inc_pressed_up_key=0;
+  pressed_up_key=true;
   seed = static_cast<unsigned int>(std::chrono::steady_clock::now().time_since_epoch().count());
 
   image->loadFromFile("./assets/game1-floor.png");
@@ -28,10 +30,10 @@ void Jeu1::set_values() {
   map_sprites["bg"]->setTexture(*image);
 
   font->loadFromFile("./assets/LVDCGO__.TTF");
-  options={"0/0","Press Space to catch the mouse"};
-  texts.resize(2);
-  text_coords = {{static_cast<float>(main_window->getSize().x) / 1.2f , static_cast<float>(main_window->getSize().y) / 20.0f},{25, 25}};
-  text_size = {30,20};
+  options={"0/0","Press Space to catch the mouse","Use the up and down keys to move the cat"};
+  texts.resize(3);
+  text_coords = {{static_cast<float>(main_window->getSize().x) / 1.2f , static_cast<float>(main_window->getSize().y) / 20.0f},{25, 25},{25, 25}};
+  text_size = {30,20,20};
   for (std::size_t i{}; i < texts.size(); ++i){
     texts[i].setFont(*font); 
     texts[i].setString(options[i]); 
@@ -58,6 +60,9 @@ void Jeu1::loop_events() {
     if (event.type == sf::Event::KeyPressed){
       if (event.key.code == sf::Keyboard::Space){
         pressed=true;
+        if (inc_pressed_up_key==0)
+          pressed_up_key=false;
+        inc_pressed_up_key++;
 
         resultat_jeu=chat->jouer(main_window, &souris_liste,map_sprites["bg"]);
         if ( resultat_jeu==1 ) 
@@ -70,6 +75,7 @@ void Jeu1::loop_events() {
         }
       }
       if (event.key.code == sf::Keyboard::Up) {
+        pressed_up_key=true;
         chat->avancer_reculer(1);
       }
 
@@ -81,12 +87,6 @@ void Jeu1::loop_events() {
   }
 }
 
-// intervalle de temps aléatoire entre 0.2 et 3 secondes
-// int Jeu1::genere_intervalle(int borne_gauche, int borne_droite){
-//   std::default_random_engine generator(seed);
-//   std::uniform_int_distribution<int> distribution(borne_gauche, borne_droite);
-//   return (int)(distribution(generator));
-// }
 
 void Jeu1::draw_all(){
   main_window->draw(*map_sprites["bg"]);
@@ -119,6 +119,9 @@ void Jeu1::print_text(int nb_souris_attrape,float nb_souris_attrape_max) {
   if (pressed==false){
     main_window->draw(texts[1]);
   }
+  if (pressed_up_key==false){
+    main_window->draw(texts[2]);
+  }
 }
 
 void Jeu1::gestion_vitesse(int * vitesse_souris,float * inc_vitesse){
@@ -149,8 +152,8 @@ void Jeu1::genere_objet(int vitesse_souris){
         haut=true;
 
     if (nb_souris_passe/nb_souris_attrape_max>0.5){
-       if(0<choix_alea && choix_alea<5)
-        souris_liste.push_back(new Souris(windowSize,vitesse_souris,haut));
+      if(0<choix_alea && choix_alea<5)
+      souris_liste.push_back(new Souris(windowSize,vitesse_souris,haut));
       if (4<choix_alea && choix_alea<7)
         souris_liste.push_back(new Bestiole(windowSize,vitesse_souris,haut));
       if (6<choix_alea && choix_alea<11)
