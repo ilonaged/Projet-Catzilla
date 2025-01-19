@@ -18,11 +18,10 @@ class Settings : public Instance {
         void draw_all();
         void set_values();
         void loop_events();
+        void changeLevel(int level_pos, int* level);
 
     public:
         Settings(sf::RenderWindow * main_window, int* gameState, int* level);
         ~Settings();
         void run();
-
-        void changeLevel(int level_pos, int* level);
 };
