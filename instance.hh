@@ -1,5 +1,6 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 #include <iostream>
 #include <map>
 
@@ -15,6 +16,8 @@ class Instance {
         std::map<std::string,sf::Sprite *> map_sprites;
 
         bool pressed;
+
+        sf::Music music;
 
         std::vector<sf::Text> texts;
         std::vector<sf::Vector2f> text_coords;

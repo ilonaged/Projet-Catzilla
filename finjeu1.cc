@@ -1,5 +1,3 @@
-
-
 #include "finjeu1.hh"
 #include <string>
 
@@ -32,7 +30,11 @@ void FinJeu1::set_values(){
         }
         texts[0].setFillColor(sf::Color::Red);
 
-    }else{
+        music.openFromFile("./assets/gameover_music.ogg");
+        music.play();
+
+
+    } else {
         image->loadFromFile("./assets/rainbow.png");
         //score = "Your score is " + std::to_string(nb_souris_attrape)+" mice caught out of "+std::to_string(nb_souris_attrape_max)+" that appeared!! (Difficulty: "+ std::to_string(niveau_jeu)+")";
         //score="Your score is "+std::to_string(nb_souris_attrape)+" (level "+std::to_string(nb_souris_attrape_max)+":"+ std::to_string(niveau_jeu)+")";
@@ -56,6 +58,7 @@ void FinJeu1::set_values(){
           texts[i].setOutlineThickness(2);
         }
     }
+    
   
   map_sprites["bg"]->setTexture(*image);
     sf::Vector2u textureSize = image->getSize();
@@ -80,6 +83,7 @@ void FinJeu1::loop_events(){
 
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Enter)) {
       *gameState=0;
+      music.stop();
     }
   }
 }
