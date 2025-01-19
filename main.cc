@@ -2,6 +2,7 @@
 #include "menu.hh"
 #include "jeu1.hh"
 #include "finjeu1.hh"
+#include "settings.hh"
 
 int main(int argc, char **argv) {
     // std::cerr << "to quit, type C-c in the terminal" << std::endl;
@@ -26,6 +27,10 @@ int main(int argc, char **argv) {
         std::cout << "Sortie du menu" << '\n';
         if(gamestate==1){
             jeu1->run();
+        }
+        if (gamestate==2){
+            Settings * settings = new Settings(&main_window, &gamestate, &niveau_jeu);
+            settings->run();
         }
         if (gamestate==4){
             FinJeu1 * fin_jeu1 = new FinJeu1(&main_window, &gamestate,jeu1->getScore(),nb_souris_attrape_max,niveau_jeu,false);
