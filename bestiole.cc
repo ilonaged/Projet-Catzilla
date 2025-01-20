@@ -2,24 +2,21 @@
 #include "bestiole.hh"
 
 
-
+//permet de générer une bestiole soit sur le chemin du haut soit sur le chemin du bas en focntion de l'arguement haut
 Bestiole::Bestiole(sf::Vector2u windowSize,int vitesse_objet,bool haut){
     est_bestiole=true;
     vitesse=vitesse_objet; 
     position.x = -130;
-    // image_expl = new sf::Texture();
-    // sprite_expl = new sf::Sprite();
-    // image_expl->loadFromFile("./assets/sang.png");
-    // sprite_expl->setTexture(*image_expl);
+
      if (haut){
         position.y = (int)(windowSize.y/2.9);
         pos_hor_init=position.y;
-        // sprite_expl->setPosition(windowSize.x/2.6,(windowSize.y/4.6));
+
 
     }else{
         position.y = (int)(windowSize.y/2.9)+150;
         pos_hor_init=position.y;
-        // sprite_expl->setPosition(windowSize.x/2.6,(windowSize.y/4.6)+150);
+
     }
     image->loadFromFile("./assets/cafard.png");
     sprite->setTexture(*image);
@@ -29,6 +26,7 @@ Bestiole::Bestiole(sf::Vector2u windowSize,int vitesse_objet,bool haut){
 
 }
 
+//La bestiole se déplace étrangement...
 void Bestiole::seDeplacer(){
     position.x += vitesse;
     position.y=pos_hor_init+(int)(9*sin(3*position.x));
