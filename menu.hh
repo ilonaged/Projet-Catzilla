@@ -3,17 +3,17 @@
 #include <iostream>
 #include "instance.hh"
 
-
+// Classe Menu : permet de gérer le menu du jeu
 class Menu: public Instance {
   private:
-    int pos;
+    //variables de position
+    int pos; 
     bool theselect;
-    void draw_all();
 
-  protected:
+    //métodes de la classe
+    void draw_all();
     void set_values();
     void loop_events();
-
 
   public:
     Menu(sf::RenderWindow * main_window, int* gameState);

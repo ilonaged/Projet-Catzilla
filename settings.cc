@@ -1,22 +1,24 @@
 #include "settings.hh"
 
+// Constructeur
 Settings::Settings(sf::RenderWindow * main_window, int* gameState, int* level): Instance(main_window, gameState), level(level){
     set_values();
 }
 
+// Destructeur
 Settings::~Settings(){
     delete font;
     delete image;
 }
 
 
+// Initialisation des valeurs
 void Settings::set_values() {
     pos = 0;
     level_pos = 0;
     theselect = false;
 
     image->loadFromFile("./assets/settings.png");
-    //bg->setTexture(*image);
     map_sprites["bg"]->setTexture(*image);
     font->loadFromFile("./assets/LVDCGO__.TTF");
 
@@ -44,18 +46,23 @@ void Settings::set_values() {
 
 
 
+// Boucle d'événements
 void Settings::loop_events() {
     sf::Event event;
+
+    //gérer la fermeture de la fenêtre
     while (main_window->pollEvent(event)) {
         if (event.type == sf::Event::Closed) {
             main_window->close();
         }
 
+        //gérer le redimensionnement de la fenêtre
         if (event.type == sf::Event::Resized) {
             windowSize = main_window->getSize();
         }
 
-        if (!theselect) {  // Navigation principale avec flèches haut/bas
+        // Navigation principale avec flèches haut/bas
+        if (!theselect) {  
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) && !pressed) {
                 if (pos < 2) {
                     ++pos;
@@ -77,10 +84,10 @@ void Settings::loop_events() {
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) && !pressed) {
                 pressed = true;
 
-                if (pos == 2) {  
+                if (pos == 2) {  //retourner au menu principal
                     *gameState = 0;
                 }
-                else if (pos == 1) {  // Entrer dans le sous-menu "Change Level"
+                else if (pos == 1) {  //entrer dans le sous-menu "Change Level"
                     theselect = true;  
                     level_pos = 0;  
                     texts_settings[1][0].setOutlineThickness(4);  
@@ -89,7 +96,8 @@ void Settings::loop_events() {
             }
         } 
 
-        if (theselect && pos == 1) {  // Sous-menu "Change Level"
+        // Sous-menu "Change Level"
+        if (theselect && pos == 1) { 
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) && !pressed) {
                 if (level_pos < 2) {
                     ++level_pos;
@@ -112,15 +120,13 @@ void Settings::loop_events() {
                 pressed = true;
                 theselect = false; 
                 texts_settings[1][level_pos].setOutlineThickness(0);
-
-                // Appliquer le niveau sélectionné
-                changeLevel(level_pos, level);
-
-                
                 texts_settings[0][1].setOutlineThickness(4); 
+                
+                changeLevel(level_pos, level); //appliquer le niveau sélectionné
             }
         }
 
+        //gérer les touches relâchées
         if (event.type == sf::Event::KeyReleased) {
             pressed = false;
         }
@@ -129,9 +135,11 @@ void Settings::loop_events() {
 
 
 
+// Dessiner tous les éléments de la fenêtre
 void Settings::draw_all(){
     main_window->clear();
     main_window->draw(*map_sprites["bg"]);
+
     for (std::size_t i{}; i < texts_settings.size(); ++i) {
         for (std::size_t j{}; j < texts_settings[i].size(); ++j) {
             main_window->draw(texts_settings[i][j]);
@@ -140,11 +148,14 @@ void Settings::draw_all(){
     main_window->display();
 }
 
+
+// Changer le niveau de difficulté du jeu
 void Settings::changeLevel(int level_pos, int* level) {
     *level = level_pos + 1;
 }
 
 
+// Lancer la fenêtre des paramètres
 void Settings::run(){
     theselect = false;
     while(main_window->isOpen() && *gameState == 2){

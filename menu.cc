@@ -1,16 +1,19 @@
 #include "menu.hh"
 
+// Constructeur
 Menu::Menu(sf::RenderWindow * main_window,int* gameState):Instance(main_window,gameState){
 
   set_values();
 }
 
+// Destructeur
 Menu::~Menu(){
   delete font;
   delete image;
-  // delete bg;
 }
 
+
+// Initialisation des valeurs
 void Menu::set_values(){
   pos = 0;
   theselect = false;
@@ -39,18 +42,24 @@ void Menu::set_values(){
   music.play();
 }
 
+
+// Boucle d'événements
 void Menu::loop_events(){
   sf::Event event;
+
+  //gérer la fermeture de la fenêtre
   while(main_window->pollEvent(event)) {
       if (event.type == sf::Event::Closed) {
         music.stop();
         main_window->close();
       }
+
+      //gérer le redimensionnement de la fenêtre
       if (event.type == sf::Event::Resized){
         windowSize = main_window->getSize();
-
       }
 
+    // Navigation dans le menu avec les touches Haut, Bas et Entrée
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Down) && !pressed){
       if( pos < 2){
         ++pos;
@@ -71,19 +80,19 @@ void Menu::loop_events(){
         pressed = false;
         theselect = false;
       }
-
     }
 
+    // Si on appuie sur Entrée, on va sur la page au gameState correspondant
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) && !theselect) {
       theselect = true;
-      
-      std::cout << options[pos] << '\n';
-      *gameState=pos+1;
+      *gameState = pos + 1;
       music.stop();
     }
   }
 }
 
+
+// Dessiner tous les éléments de la fenêtre
 void Menu::draw_all(){
   main_window->clear();
   main_window->draw(*map_sprites["bg"]);
@@ -93,6 +102,8 @@ void Menu::draw_all(){
   main_window->display();
 }
 
+
+// Lancer la fenêtre du menu
 void Menu::run(){
   theselect = false;
   while(main_window->isOpen() && *gameState == 0){

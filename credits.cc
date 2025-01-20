@@ -1,16 +1,18 @@
 #include "credits.hh"
 
+// Constructeur
 Credits::Credits(sf::RenderWindow * main_window, int* gameState):Instance(main_window,gameState){
     set_values();
 }
 
+// Destructeur
 Credits::~Credits(){
     delete font;
     delete image;
-    // delete bg;
 }
 
 
+// Initialisation des valeurs
 void Credits::set_values() {
     font->loadFromFile("./assets/LVDCGO__.TTF");
 
@@ -38,28 +40,35 @@ void Credits::set_values() {
 }
 
 
+// Boucle d'événements
 void Credits::loop_events() {
     sf::Event event;
+
+    //gérer la fermeture de la fenêtre
     while (main_window->pollEvent(event)) {
         if (event.type == sf::Event::Closed) {
             main_window->close();
         }
 
+        //gérer le redimensionnement de la fenêtre
         if (event.type == sf::Event::Resized) {
             windowSize = main_window->getSize();
         }
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) && !pressed) {
             pressed = true;
-            *gameState = 0;
+            *gameState = 0; //retourner au menu
         }
     }
 
+    //gérer les touches relâchées
     if (event.type == sf::Event::KeyReleased) {
         pressed = false;
     }
 }
 
+
+// Dessiner tous les éléments de la fenêtre
 void Credits::draw_all(){
     main_window->clear();
     for (std::size_t i{}; i < texts.size(); ++i) {
@@ -68,6 +77,8 @@ void Credits::draw_all(){
     main_window->display();
 }
 
+
+// Lancer la fenêtre des crédits
 void Credits::run(){
     while(main_window->isOpen() && *gameState == 3){
         loop_events();
