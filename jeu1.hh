@@ -24,7 +24,6 @@ class Jeu1: public Instance{
         std::vector<Objet *> souris_liste;
 
         void print_text(int nb_souris_attrape,float nb_souris_attrape_max);
-        // int genere_intervalle(int borne_gauche, int borne_droite);
         void gestion_vitesse(int * vitesse_souris,float * inc_vitesse);
         void draw_all();
         void genere_objet(int vitesse_souris);

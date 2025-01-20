@@ -4,13 +4,13 @@
 #include <iostream>
 #include <map>
 
+// Classe Instance : permet de gérer toutes les instances du jeu (menu, jeu, fin de jeu...)
 class Instance {
     protected:
         int* gameState;
         sf::RenderWindow * main_window;
         sf::Vector2u windowSize;
         
-
         sf::Font * font;
         sf::Texture * image;
         std::map<std::string,sf::Sprite *> map_sprites;
@@ -26,7 +26,6 @@ class Instance {
 
         void set_values_instance();
         virtual void loop_events();
-        // void draw_all(){};
 
     public:
         Instance(sf::RenderWindow * main_window, int* gameState);

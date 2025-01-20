@@ -3,8 +3,6 @@
 
 class Bestiole : public Objet{
 protected:
-    // sf::Texture * image_expl;
-    // sf::Sprite * sprite_expl;
     int pos_hor_init;
 
 public : 

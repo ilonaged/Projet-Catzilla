@@ -1,20 +1,23 @@
 #include "finjeu1.hh"
 #include <string>
 
+// Constructeur avec paramètres
 FinJeu1::FinJeu1(sf::RenderWindow * main_window,int* gameState,int nb_souris_attrape,int niveau_jeu,bool is_game_over):Instance(main_window,gameState),nb_souris_attrape(nb_souris_attrape),niveau_jeu(niveau_jeu),is_game_over(is_game_over){
 
   set_values();
 }
 
+// Destructeur
 FinJeu1::~FinJeu1(){
   delete font;
   delete image;
-  // delete bg;
 }
 
+
+// Initialiser les valeurs de la fin du jeu
 void FinJeu1::set_values(){
 
-    if (is_game_over){
+    if (is_game_over){ // cas de game over
         image->loadFromFile("./assets/gameover.png");
         score="Your score is "+std::to_string(nb_souris_attrape);
         options = {"GAME OVER","Press Enter to go back to the menu",score.c_str()};
@@ -34,7 +37,7 @@ void FinJeu1::set_values(){
         music.play();
 
 
-    } else {
+    } else { // cas de victoire
         image->loadFromFile("./assets/rainbow.png");
         score = "Your score is " + std::to_string(nb_souris_attrape);
         std::string difficulty = "Difficulty: "+ std::to_string(niveau_jeu);
@@ -52,7 +55,7 @@ void FinJeu1::set_values(){
         }
     }
     
-  
+  //gestion de l'affichage du fond de jeu
   map_sprites["bg"]->setTexture(*image);
     sf::Vector2u textureSize = image->getSize();
     map_sprites["bg"]->setScale(
@@ -63,25 +66,31 @@ void FinJeu1::set_values(){
 
 }
 
+
+// Boucle d'événements
 void FinJeu1::loop_events(){
   sf::Event event;
   while(main_window->pollEvent(event)) {
+
+      //gérer la fermeture de la fenêtre
       if (event.type == sf::Event::Closed) {
         music.stop();
         main_window->close();
       }
+      //gérer le redimensionnement de la fenêtre
       if (event.type == sf::Event::Resized){
         windowSize = main_window->getSize();
 
       }
 
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Enter)) {
-      *gameState=0;
+      *gameState=0; //retour au menu
       music.stop();
     }
   }
 }
 
+// Afficher tous les éléments de la fenêtre
 void FinJeu1::draw_all(){
   main_window->clear();
   main_window->draw(*map_sprites["bg"]);
@@ -91,6 +100,7 @@ void FinJeu1::draw_all(){
   main_window->display();
 }
 
+// Lancer la fenêtre de la fin du jeu
 void FinJeu1::run(){
     int inc=0;
     if(is_game_over){
