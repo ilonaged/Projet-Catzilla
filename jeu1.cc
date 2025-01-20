@@ -64,7 +64,7 @@ void Jeu1::loop_events() {
 
   while(main_window->pollEvent(event)) {
     if (event.type == sf::Event::Closed) {
-      music.stop();
+      // music.stop();
       main_window->close();
     }
     if (event.type == sf::Event::Resized){
@@ -83,8 +83,8 @@ void Jeu1::loop_events() {
         resultat_jeu=chat->jouer(main_window, &souris_liste,map_sprites["bg"]);
         if ( resultat_jeu==1 ) {
             nb_souris_attrape++;
-            music.stop();
-            music.play();
+            // music.stop();
+            // music.play();
         }
         if(resultat_jeu==-1)
             *gameState=5;
